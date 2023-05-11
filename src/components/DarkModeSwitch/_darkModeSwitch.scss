@@ -1,0 +1,31 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../abstracts/mixins" as *;
+@use "../../base/functions" as func;
+
+.dark-mode-switch {
+  @include flex(row, center, center);
+  gap: 0.5em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: c.$very-dark-blue;
+  transition: v.$main-transition;
+
+  &__icon {
+    width: func.rem(24);
+    aspect-ratio: 1;
+    rotate: -10deg;
+  }
+
+  &__text {
+    font-size: func.rem(14);
+    font-weight: 600;
+    cursor: inherit;
+  }
+
+  &:where(:hover, :focus-visible) {
+    opacity: 0.5;
+  }
+}

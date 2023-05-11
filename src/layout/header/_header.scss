@@ -1,0 +1,6 @@
+@use "../../abstracts/mixins" as *;
+
+.header-container {
+  @include flex(row, space-between);
+  padding-block: 1.5rem;
+}

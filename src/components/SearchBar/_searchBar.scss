@@ -1,0 +1,64 @@
+@use "../../abstracts/mixins" as *;
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../base/functions" as func;
+
+.country-searchbar {
+  width: max(func.rem(300), func.rem(500));
+  @include flex();
+  gap: 1em;
+  border: func.rem(1) solid transparent;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 1rem;
+  padding-left: 2rem;
+  border-radius: 0.25rem;
+  cursor: text;
+  color: c.$very-dark-blue;
+  transition: v.$main-transition;
+
+  &__icon {
+    width: func.rem(24);
+    aspect-ratio: 1;
+    color: c.$dark-gray;
+    transition: v.$main-transition;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: inherit;
+    font: inherit;
+    color: inherit;
+    &::placeholder {
+      color: c.$dark-gray;
+      font-weight: 300;
+    }
+  }
+
+  &:focus-within {
+    border-color: c.$dark-gray;
+  }
+  &:focus-within .country-searchbar__icon {
+    color: inherit;
+  }
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type="search"]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+input[type="search"]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+/* clears the ‘X’ from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}

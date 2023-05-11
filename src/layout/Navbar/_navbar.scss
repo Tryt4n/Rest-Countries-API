@@ -1,0 +1,7 @@
+@use "../../abstracts/mixins" as *;
+
+.navigation-bar {
+  @include flex(row, space-between, center);
+  gap: 3rem;
+  margin-block: 2rem;
+}
