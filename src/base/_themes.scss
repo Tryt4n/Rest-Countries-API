@@ -1,39 +1,73 @@
-//! Dark Mode Elements
-$dark-blue: hsl(209, 23%, 22%);
-
-//! Dark Mode Background
-$very-dark-blue-bg: hsl(207, 26%, 17%);
-
-//! Light Mode Text
-$very-dark-blue: hsl(200, 15%, 8%);
-
-//! Light Mode Input
-$dark-gray: hsl(0, 0%, 52%);
-
-//! Light Mode Background
-$very-light-gray: hsl(0, 0%, 98%);
-
-//! Dark Mode Text & Light Mode Elements
-$white: hsl(0, 0%, 100%);
-
-//! Dark Mode Searchbar placeholder
-$dark-white: hsl(0, 0%, 90%);
-
+//! Light Theme
 :root {
-  //! App
-  --body-background: hsl(0, 0%, 98%);
-  --header-bg: white;
-  //   --header-text: inherit;
-  //! DarkModeSwitch
-  --darkModeSwitch-text-color: hsl(200, 15%, 8%);
-  --darkModeSwitch-text-color-hover: black;
+  //* App
+  --body-background: var(--very-light-gray);
+  --header-bg: var(--white);
+  --header-text: var(--very-dark-blue);
+
+  //* DarkModeSwitch
+  --dark-mode-switch-text-color: var(--very-dark-blue);
+  --dark-mode-switch-text-color-hover: var(--very-dark-blue);
+  --dark-mode-switch-opacity: 0.5;
+  --dark-mode-switch-icon-moon-border-color: var(--very-dark-blue);
+  --dark-mode-switch-icon-moon-border-color-hover: var(--very-dark-blue);
+  --dark-mode-switch-icon-moon-fill-color: var(--white);
+  --dark-mode-switch-icon-moon-fill-color-hover: var(--white);
+
+  //* Loading Spinner
+  --loading-spinner-color: var(--very-dark-blue);
+
+  //* SearchBar
+  --searchbar-background: var(--white);
+  --searchbar-text-color: var(--very-dark-blue);
+  --searchbar-text-color-placeholder: var(--dark-gray);
+  --searchbar-icon-color: var(--dark-gray);
+  --searchbar-outline-color: var(--black);
+
+  //* Select Input
+  --select-input-background: var(--white);
+  --select-input-text-color: var(--very-dark-blue);
+  --select-input-outline-color: var(--black);
+
+  //* Card
+  --country-card-background: var(--white);
+  --country-card-text-color: var(--very-dark-blue);
+  --country-card-text-output-color: var(--very-dark-blue);
 }
 
+//! Dark Theme
 [data-theme="dark"] {
-  //! App
-  --body-background: hsl(207, 26%, 17%);
-  --header-bg: hsl(209, 23%, 22%);
-  --header-text: white;
-  //! DarkModeSwitch
-  --darkModeSwitch-text-color: white;
+  //* App
+  --body-background: var(--very-dark-blue-bg);
+  --header-bg: var(--dark-blue);
+  --header-text: var(--white);
+
+  //* DarkModeSwitch
+  --dark-mode-switch-text-color: var(--white);
+  --dark-mode-switch-text-color-hover: var(--black);
+  --dark-mode-switch-opacity: 1;
+  --dark-mode-switch-icon-moon-border-color: var(--white);
+  --dark-mode-switch-icon-moon-border-color-hover: var(--black);
+  --dark-mode-switch-icon-moon-fill-color: var(--white);
+  --dark-mode-switch-icon-moon-fill-color-hover: var(--black);
+
+  //* Loading Spinner
+  --loading-spinner-color: var(--white);
+
+  //* SearchBar
+  --searchbar-background: var(--dark-blue);
+  --searchbar-text-color: var(--white);
+  --searchbar-text-color-placeholder: var(--dark-white);
+  --searchbar-icon-color: var(--dark-white);
+  --searchbar-outline-color: var(--white);
+
+  //* Select Input
+  --select-input-background: var(--dark-blue);
+  --select-input-text-color: var(--white);
+  --select-input-outline-color: var(--white);
+
+  //* Card
+  --country-card-background: var(--dark-blue);
+  --country-card-text-color: var(--white);
+  --country-card-text-output-color: var(--dark-white);
 }

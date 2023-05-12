@@ -1,18 +1,14 @@
-@use "../../abstracts/colors" as c;
 @use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
 
 .country-card {
   border-radius: v.$block-border-radius;
   overflow: hidden;
-  background-color: c.$white;
+  background-color: var(--country-card-background);
   box-shadow: v.$box-shadow;
   font-size: func.rem(14);
+  color: var(--country-card-text-color);
   transition: v.$main-transition;
-  @media (prefers-color-scheme: dark) {
-    background-color: c.$dark-blue;
-    color: c.$white;
-  }
   &:where(:hover, :focus-visible) {
     animation: shake 500ms;
     @media (prefers-reduced-motion: reduce) {
@@ -63,10 +59,8 @@
     font-weight: 600;
   }
 
-  @media (prefers-color-scheme: dark) {
-    &__text-output {
-      color: c.$dark-white;
-    }
+  &__text-output {
+    color: var(--country-card-text-output-color);
   }
 }
 

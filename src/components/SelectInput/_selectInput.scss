@@ -1,26 +1,18 @@
-@use "../../abstracts/colors" as c;
 @use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
 
 .select-input-container {
   min-width: fit-content;
   padding-right: 1rem;
-  background-color: c.$white;
+  background-color: var(--select-input-background);
   outline: func.rem(1) solid transparent;
   border-radius: v.$block-border-radius;
   overflow: hidden;
   box-shadow: v.$box-shadow;
   cursor: pointer;
   transition: v.$main-transition;
-  @media (prefers-color-scheme: dark) {
-    background-color: c.$dark-blue;
-    color: c.$white;
-  }
   &:where(:hover, :focus-within) {
-    outline: func.rem(1) solid black;
-    @media (prefers-color-scheme: dark) {
-      outline: func.rem(1) solid c.$white;
-    }
+    outline: func.rem(1) solid var(--select-input-outline-color);
   }
 }
 
@@ -32,8 +24,6 @@
   border: none;
   outline: none;
   font: inherit;
+  color: var(--select-input-text-color);
   cursor: inherit;
-  @media (prefers-color-scheme: dark) {
-    color: c.$white;
-  }
 }

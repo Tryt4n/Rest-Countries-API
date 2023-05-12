@@ -1,17 +1,17 @@
 @use "../../abstracts/mixins" as *;
-@use "../../abstracts/colors" as c;
 @use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
 
 .country-searchbar {
   @include flex();
   gap: 1em;
+  background: var(--searchbar-background);
   padding: 1rem;
   padding-left: 2rem;
   outline: func.rem(1) solid transparent;
   border-radius: v.$block-border-radius;
   box-shadow: v.$box-shadow;
-  color: c.$very-dark-blue;
+  color: var(--searchbar-text-color);
   cursor: text;
   transition: v.$main-transition;
   @media (width > func.rem(768)) {
@@ -20,19 +20,12 @@
   @media (width <= func.rem(768)) {
     width: 100%;
   }
-  @media (prefers-color-scheme: dark) {
-    color: c.$white;
-    background: c.$dark-blue;
-  }
 
   &__icon {
     width: func.rem(24);
     aspect-ratio: 1;
-    color: c.$dark-gray;
+    color: var(--searchbar-icon-color);
     transition: v.$main-transition;
-    @media (prefers-color-scheme: dark) {
-      color: c.$dark-white;
-    }
   }
 
   &__input {
@@ -41,21 +34,20 @@
     outline: none;
     background: inherit;
     font: inherit;
+    font-weight: 600;
     color: inherit;
     &::placeholder {
-      color: c.$dark-gray;
+      color: var(--searchbar-text-color-placeholder);
       font-weight: 300;
-      @media (prefers-color-scheme: dark) {
-        color: c.$dark-white;
-      }
+      transition: v.$main-transition;
+    }
+    &:where(:hover, :focus-visible)::placeholder {
+      color: inherit;
     }
   }
 
   &:where(:hover, :focus-within) {
-    outline: func.rem(1) solid black;
-    @media (prefers-color-scheme: dark) {
-      outline: func.rem(1) solid white;
-    }
+    outline: func.rem(1) solid var(--searchbar-outline-color);
   }
   &:where(:hover, :focus-within) .country-searchbar__icon {
     color: inherit;

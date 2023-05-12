@@ -1,18 +1,8 @@
-@use "../../abstracts/colors" as c;
-
 body {
-  // background-color: var(--body-background);
-  background-color: c.$very-light-gray;
-  @media (prefers-color-scheme: dark) {
-    background-color: c.$very-dark-blue-bg;
-  }
+  background-color: var(--body-background);
 }
 .header-bg {
-  background-color: c.$white;
+  background-color: var(--header-bg);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  @media (prefers-color-scheme: dark) {
-    background-color: c.$dark-blue;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    color: c.$white;
-  }
+  color: var(--header-text);
 }

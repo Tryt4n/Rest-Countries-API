@@ -11,7 +11,7 @@
   border: none;
   cursor: pointer;
   font: inherit;
-  color: c.$very-dark-blue;
+  color: var(--dark-mode-switch-text-color);
   transition: v.$main-transition;
   @media (width > func.rem(480)) {
     padding-inline: 0.5rem;
@@ -21,8 +21,10 @@
     padding-inline: 0.25rem;
     margin-right: -0.25em;
   }
-  @media (prefers-color-scheme: dark) {
-    color: c.$white;
+
+  &:where(:hover, :focus-visible) {
+    color: var(--dark-mode-switch-text-color-hover);
+    opacity: var(--dark-mode-switch-opacity);
   }
 
   &__text {
@@ -31,32 +33,19 @@
     cursor: inherit;
     padding-block: 0.5em;
   }
-
-  &:where(:hover, :focus-visible) {
-    opacity: 0.5;
-    @media (prefers-color-scheme: dark) {
-      opacity: 1;
-      color: #000;
-    }
-  }
 }
 
 #icon-moon-border {
-  color: c.$very-dark-blue;
+  color: var(--dark-mode-switch-icon-moon-border-color);
   transition: v.$main-transition;
-  @media (prefers-color-scheme: dark) {
-    color: transparent;
-  }
 }
 #icon-moon-fill {
-  color: transparent;
+  color: var(--dark-mode-switch-icon-moon-fill-color);
   transition: v.$main-transition;
-  @media (prefers-color-scheme: dark) {
-    color: c.$white;
-  }
+}
+.dark-mode-switch:where(:hover, :focus-visible) #icon-moon-border {
+  color: var(--dark-mode-switch-icon-moon-border-color-hover);
 }
 .dark-mode-switch:where(:hover, :focus-visible) #icon-moon-fill {
-  @media (prefers-color-scheme: dark) {
-    color: black;
-  }
+  color: var(--dark-mode-switch-icon-moon-fill-color-hover);
 }
