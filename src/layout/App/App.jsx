@@ -4,8 +4,7 @@ import Header from "../header/Header";
 import Main from "../main/Main";
 
 export default function App() {
-  const { data } = useContext(DataContext);
-  console.log(data);
+  const { data, isLoading } = useContext(DataContext);
 
   return (
     <>

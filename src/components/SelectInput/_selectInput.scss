@@ -4,30 +4,32 @@
 
 .select-input-container {
   min-width: fit-content;
-  background: c.$white;
   padding-right: 1rem;
+  background: c.$white;
   outline: func.rem(1) solid transparent;
   border-radius: v.$block-border-radius;
   overflow: hidden;
   box-shadow: v.$box-shadow;
+  cursor: pointer;
   transition: v.$main-transition;
-  &:focus-within {
+  &:where(:hover, :focus-within) {
     outline: func.rem(1) solid black;
   }
 }
 
 .select-input {
   height: 100%;
-  background: inherit;
-  border: none;
-  font: inherit;
   padding: 1rem;
   padding-right: 3rem;
+  background: inherit;
+  border: none;
   outline: none;
+  font: inherit;
+  cursor: inherit;
 }
 
 select option {
-  line-height: 2rem;
-  padding: 1rem;
   margin: 1rem;
+  padding: 1rem;
+  line-height: 2rem;
 }

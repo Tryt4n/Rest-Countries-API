@@ -3,6 +3,7 @@ export default function SearchBar() {
     <label
       htmlFor="country-searchbar"
       className="country-searchbar"
+      aria-label="searchbar"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

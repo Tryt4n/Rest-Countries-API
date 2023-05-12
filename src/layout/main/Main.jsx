@@ -1,41 +1,23 @@
+import { useContext } from "react";
+import DataContext from "../../context/DataContext";
+
 import Card from "../../components/Card/Card";
 import Navbar from "../Navbar/Navbar";
 
 export default function Main() {
+  const { data, isLoading } = useContext(DataContext);
+
   return (
     <main className="container">
       <Navbar />
       <div className="country-cards-grid">
-        <Card country="al" />
-        <Card
-          country="us"
-          alignLeft
-        />
-        <Card country="pl" />
-        <Card country="pt" />
-        <Card country="es" />
-        <Card country="fr" />
-        <Card country="gb" />
-        <Card country="uy" />
-        <Card country="af" />
-        <Card country="al" />
-        <Card country="us" />
-        <Card country="pl" />
-        <Card country="pt" />
-        <Card country="es" />
-        <Card country="fr" />
-        <Card country="gb" />
-        <Card country="uy" />
-        <Card country="af" />
-        <Card country="al" />
-        <Card country="us" />
-        <Card country="pl" />
-        <Card country="pt" />
-        <Card country="es" />
-        <Card country="fr" />
-        <Card country="gb" />
-        <Card country="uy" />
-        <Card country="af" />
+        {!isLoading &&
+          data.map((country) => (
+            <Card
+              key={country.cca3}
+              data={country}
+            />
+          ))}
       </div>
     </main>
   );

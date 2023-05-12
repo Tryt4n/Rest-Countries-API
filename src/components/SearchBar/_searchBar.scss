@@ -4,16 +4,15 @@
 @use "../../base/functions" as func;
 
 .country-searchbar {
-  // width: max(func.rem(300), func.rem(500));
   @include flex();
   gap: 1em;
-  outline: func.rem(1) solid transparent;
-  box-shadow: v.$box-shadow;
   padding: 1rem;
   padding-left: 2rem;
+  outline: func.rem(1) solid transparent;
   border-radius: v.$block-border-radius;
-  cursor: text;
+  box-shadow: v.$box-shadow;
   color: c.$very-dark-blue;
+  cursor: text;
   transition: v.$main-transition;
   @media (width > func.rem(768)) {
     width: max(func.rem(300), func.rem(500));
@@ -42,10 +41,10 @@
     }
   }
 
-  &:focus-within {
+  &:where(:hover, :focus-within) {
     outline: func.rem(1) solid black;
   }
-  &:focus-within .country-searchbar__icon {
+  &:where(:hover, :focus-within) .country-searchbar__icon {
     color: inherit;
   }
 }

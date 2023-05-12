@@ -8,8 +8,22 @@
   background: c.$white;
   box-shadow: v.$box-shadow;
   font-size: func.rem(14);
-  @media (width <= func.rem(768)) {
-    width: min(func.rem(450), 100%);
+  transition: v.$main-transition;
+  &:where(:hover, :focus-visible) {
+    animation: shake 500ms;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__link {
+    transition: v.$main-transition;
+    &:where(:hover, :focus-visible) {
+      opacity: 0.5;
+    }
+    @media (width <= func.rem(768)) {
+      width: min(func.rem(450), 100%);
+    }
   }
 
   &__text-wrapper {
@@ -36,5 +50,35 @@
 
   &__text-bolded {
     font-weight: 600;
+  }
+}
+
+@keyframes shake {
+  from {
+    rotate: 0;
+  }
+  12.5% {
+    rotate: -1.5deg;
+  }
+  25% {
+    rotate: 0deg;
+  }
+  37.5% {
+    rotate: 1.5deg;
+  }
+  50% {
+    rotate: 0;
+  }
+  62.5% {
+    rotate: -0.5deg;
+  }
+  75% {
+    rotate: 0;
+  }
+  87.5% {
+    rotate: 0.5deg;
+  }
+  to {
+    rotate: 0;
   }
 }

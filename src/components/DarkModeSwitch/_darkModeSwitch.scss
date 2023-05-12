@@ -13,6 +13,14 @@
   font: inherit;
   color: c.$very-dark-blue;
   transition: v.$main-transition;
+  @media (width > func.rem(480)) {
+    padding-right: 0.5rem;
+    margin-right: -0.5em;
+  }
+  @media (width <= func.rem(480)) {
+    padding-right: 0.25rem;
+    margin-right: -0.25em;
+  }
 
   &__icon {
     width: func.rem(24);
@@ -27,6 +35,7 @@
     font-size: func.rem(14);
     font-weight: 600;
     cursor: inherit;
+    padding-block: 0.5em;
   }
 
   &:where(:hover, :focus-visible) {

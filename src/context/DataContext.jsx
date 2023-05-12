@@ -9,11 +9,13 @@ const DataContext = createContext({
 
 export function DataProvider({ children }) {
   const [data, setData] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const API_URL = `https://restcountries.com/v3.1/all`;
 
   const controller = new AbortController();
   useEffect(() => {
+    setIsLoading(true);
     axios
       // * to work with controller, main can't have StrictMode
       .get(API_URL, { signal: controller.signal })
@@ -27,7 +29,8 @@ export function DataProvider({ children }) {
         } else {
           console.error("IP address format is incorrect");
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
     return () => controller.abort();
   }, []);
 
@@ -36,6 +39,7 @@ export function DataProvider({ children }) {
       value={{
         data: data,
         setData: setData,
+        isLoading: isLoading,
       }}
     >
       {children}
