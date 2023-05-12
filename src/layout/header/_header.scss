@@ -1,6 +1,10 @@
 @use "../../abstracts/mixins" as *;
 
 .header-container {
-  @include flex(row, space-between);
+  @include flex(row, space-between, center);
   padding-block: 1.5rem;
+
+  &__header {
+    font-size: clamp(1rem, 5vw, 2rem);
+  }
 }

@@ -1,7 +1,16 @@
 @use "../../abstracts/mixins" as *;
+@use "../../base/functions" as func;
 
 .navigation-bar {
-  @include flex(row, space-between, center);
-  gap: 3rem;
   margin-block: 2rem;
+
+  &__form-container {
+    @include flex(row, space-between);
+    gap: 3rem;
+
+    @media (width <= func.rem(768)) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
 }

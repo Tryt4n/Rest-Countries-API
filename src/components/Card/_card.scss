@@ -1,0 +1,40 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../base/functions" as func;
+
+.country-card {
+  border-radius: v.$block-border-radius;
+  overflow: hidden;
+  background: c.$white;
+  box-shadow: v.$box-shadow;
+  font-size: func.rem(14);
+  @media (width <= func.rem(768)) {
+    width: min(func.rem(450), 100%);
+  }
+
+  &__text-wrapper {
+    padding: 2em 1.5em 3em;
+  }
+
+  &__name {
+    font-size: 1.25rem;
+    margin-bottom: 1em;
+  }
+
+  &__img {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+  }
+  &__img[data-align-left] {
+    object-position: left;
+  }
+
+  &__text-line:not(:last-child) {
+    margin-bottom: 0.5em;
+  }
+
+  &__text-bolded {
+    font-weight: 600;
+  }
+}

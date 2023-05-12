@@ -1,2 +1,19 @@
+@use "../../base/functions" as func;
+
 .country-cards-grid {
+  display: grid;
+  gap: 2rem;
+  @media (width > func.rem(1024)) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (width <= func.rem(1280)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (width <= func.rem(1024)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (width <= func.rem(768)) {
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
 }

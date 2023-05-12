@@ -1,0 +1,33 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../base/functions" as func;
+
+.select-input-container {
+  min-width: fit-content;
+  background: c.$white;
+  padding-right: 1rem;
+  outline: func.rem(1) solid transparent;
+  border-radius: v.$block-border-radius;
+  overflow: hidden;
+  box-shadow: v.$box-shadow;
+  transition: v.$main-transition;
+  &:focus-within {
+    outline: func.rem(1) solid black;
+  }
+}
+
+.select-input {
+  height: 100%;
+  background: inherit;
+  border: none;
+  font: inherit;
+  padding: 1rem;
+  padding-right: 3rem;
+  outline: none;
+}
+
+select option {
+  line-height: 2rem;
+  padding: 1rem;
+  margin: 1rem;
+}

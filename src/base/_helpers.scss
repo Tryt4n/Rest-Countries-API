@@ -12,5 +12,13 @@
 
 .container {
   max-width: func.rem(1440);
-  margin-inline: 3rem;
+  margin-inline: auto;
+  padding-inline: 3rem;
+  @media (width <= func.rem(768)) {
+    width: 90%;
+    padding-inline: 0;
+  }
+  @media (width <= func.rem(480)) {
+    width: 95%;
+  }
 }

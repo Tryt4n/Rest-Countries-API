@@ -5,6 +5,7 @@ import Main from "../main/Main";
 
 export default function App() {
   const { data } = useContext(DataContext);
+  console.log(data);
 
   return (
     <>

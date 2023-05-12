@@ -5,9 +5,9 @@ import App from "./layout/App/App";
 import "./style.scss";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <DataProvider>
-      <App />
-    </DataProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <DataProvider>
+    <App />
+  </DataProvider>
+  // </React.StrictMode>
 );
