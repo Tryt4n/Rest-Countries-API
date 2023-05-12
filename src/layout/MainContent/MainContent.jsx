@@ -5,7 +5,7 @@ import Card from "../../components/Card/Card";
 import Navbar from "../Navbar/Navbar";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-export default function Main() {
+export default function MainContent() {
   const { data, isLoading } = useContext(DataContext);
 
   return (
