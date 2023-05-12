@@ -1,0 +1,39 @@
+//! Dark Mode Elements
+$dark-blue: hsl(209, 23%, 22%);
+
+//! Dark Mode Background
+$very-dark-blue-bg: hsl(207, 26%, 17%);
+
+//! Light Mode Text
+$very-dark-blue: hsl(200, 15%, 8%);
+
+//! Light Mode Input
+$dark-gray: hsl(0, 0%, 52%);
+
+//! Light Mode Background
+$very-light-gray: hsl(0, 0%, 98%);
+
+//! Dark Mode Text & Light Mode Elements
+$white: hsl(0, 0%, 100%);
+
+//! Dark Mode Searchbar placeholder
+$dark-white: hsl(0, 0%, 90%);
+
+:root {
+  //! App
+  --body-background: hsl(0, 0%, 98%);
+  --header-bg: white;
+  //   --header-text: inherit;
+  //! DarkModeSwitch
+  --darkModeSwitch-text-color: hsl(200, 15%, 8%);
+  --darkModeSwitch-text-color-hover: black;
+}
+
+[data-theme="dark"] {
+  //! App
+  --body-background: hsl(207, 26%, 17%);
+  --header-bg: hsl(209, 23%, 22%);
+  --header-text: white;
+  //! DarkModeSwitch
+  --darkModeSwitch-text-color: white;
+}

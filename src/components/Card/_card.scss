@@ -5,10 +5,14 @@
 .country-card {
   border-radius: v.$block-border-radius;
   overflow: hidden;
-  background: c.$white;
+  background-color: c.$white;
   box-shadow: v.$box-shadow;
   font-size: func.rem(14);
   transition: v.$main-transition;
+  @media (prefers-color-scheme: dark) {
+    background-color: c.$dark-blue;
+    color: c.$white;
+  }
   &:where(:hover, :focus-visible) {
     animation: shake 500ms;
     @media (prefers-reduced-motion: reduce) {
@@ -44,12 +48,25 @@
     object-position: left;
   }
 
+  &__img-loading-spinner {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    scale: 0.75;
+  }
+
   &__text-line:not(:last-child) {
     margin-bottom: 0.5em;
   }
 
   &__text-bolded {
     font-weight: 600;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &__text-output {
+      color: c.$dark-white;
+    }
   }
 }
 

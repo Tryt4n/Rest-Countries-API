@@ -20,12 +20,19 @@
   @media (width <= func.rem(768)) {
     width: 100%;
   }
+  @media (prefers-color-scheme: dark) {
+    color: c.$white;
+    background: c.$dark-blue;
+  }
 
   &__icon {
     width: func.rem(24);
     aspect-ratio: 1;
     color: c.$dark-gray;
     transition: v.$main-transition;
+    @media (prefers-color-scheme: dark) {
+      color: c.$dark-white;
+    }
   }
 
   &__input {
@@ -38,11 +45,17 @@
     &::placeholder {
       color: c.$dark-gray;
       font-weight: 300;
+      @media (prefers-color-scheme: dark) {
+        color: c.$dark-white;
+      }
     }
   }
 
   &:where(:hover, :focus-within) {
     outline: func.rem(1) solid black;
+    @media (prefers-color-scheme: dark) {
+      outline: func.rem(1) solid white;
+    }
   }
   &:where(:hover, :focus-within) .country-searchbar__icon {
     color: inherit;

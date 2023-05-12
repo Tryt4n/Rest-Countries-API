@@ -5,15 +5,22 @@
 .select-input-container {
   min-width: fit-content;
   padding-right: 1rem;
-  background: c.$white;
+  background-color: c.$white;
   outline: func.rem(1) solid transparent;
   border-radius: v.$block-border-radius;
   overflow: hidden;
   box-shadow: v.$box-shadow;
   cursor: pointer;
   transition: v.$main-transition;
+  @media (prefers-color-scheme: dark) {
+    background-color: c.$dark-blue;
+    color: c.$white;
+  }
   &:where(:hover, :focus-within) {
     outline: func.rem(1) solid black;
+    @media (prefers-color-scheme: dark) {
+      outline: func.rem(1) solid c.$white;
+    }
   }
 }
 
@@ -26,10 +33,7 @@
   outline: none;
   font: inherit;
   cursor: inherit;
-}
-
-select option {
-  margin: 1rem;
-  padding: 1rem;
-  line-height: 2rem;
+  @media (prefers-color-scheme: dark) {
+    color: c.$white;
+  }
 }

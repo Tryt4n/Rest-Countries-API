@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
-import Header from "../header/Header";
-import Main from "../main/Main";
+import Header from "../Header/Header";
+import MainContent from "../MainContent/MainContent";
 
 export default function App() {
   const { data, isLoading } = useContext(DataContext);
@@ -11,7 +11,7 @@ export default function App() {
       <div className="header-bg">
         <Header />
       </div>
-      <Main />
+      <MainContent />
     </>
   );
 }

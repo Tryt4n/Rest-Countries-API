@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import dataJSON from "../../server/data.json";
 
 const DataContext = createContext({
   data: {},
@@ -12,7 +11,6 @@ export function DataProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const API_URL = `https://restcountries.com/v3.1/all`;
-
   const controller = new AbortController();
   useEffect(() => {
     setIsLoading(true);
@@ -32,7 +30,7 @@ export function DataProvider({ children }) {
       })
       .finally(() => setIsLoading(false));
     return () => controller.abort();
-  }, []);
+  }, [API_URL]);
 
   return (
     <DataContext.Provider

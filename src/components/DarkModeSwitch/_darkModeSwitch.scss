@@ -14,21 +14,15 @@
   color: c.$very-dark-blue;
   transition: v.$main-transition;
   @media (width > func.rem(480)) {
-    padding-right: 0.5rem;
+    padding-inline: 0.5rem;
     margin-right: -0.5em;
   }
   @media (width <= func.rem(480)) {
-    padding-right: 0.25rem;
+    padding-inline: 0.25rem;
     margin-right: -0.25em;
   }
-
-  &__icon {
-    width: func.rem(24);
-    aspect-ratio: 1;
-    rotate: -10deg;
-    @media (width <= func.rem(480)) {
-      width: func.rem(20);
-    }
+  @media (prefers-color-scheme: dark) {
+    color: c.$white;
   }
 
   &__text {
@@ -40,5 +34,29 @@
 
   &:where(:hover, :focus-visible) {
     opacity: 0.5;
+    @media (prefers-color-scheme: dark) {
+      opacity: 1;
+      color: #000;
+    }
+  }
+}
+
+#icon-moon-border {
+  color: c.$very-dark-blue;
+  transition: v.$main-transition;
+  @media (prefers-color-scheme: dark) {
+    color: transparent;
+  }
+}
+#icon-moon-fill {
+  color: transparent;
+  transition: v.$main-transition;
+  @media (prefers-color-scheme: dark) {
+    color: c.$white;
+  }
+}
+.dark-mode-switch:where(:hover, :focus-visible) #icon-moon-fill {
+  @media (prefers-color-scheme: dark) {
+    color: black;
   }
 }

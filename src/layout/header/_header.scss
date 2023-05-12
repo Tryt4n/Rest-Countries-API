@@ -3,6 +3,7 @@
 .header-container {
   @include flex(row, space-between, center);
   padding-block: 1.5rem;
+  height: 80px;
 
   &__header {
     font-size: clamp(1rem, 5vw, 2rem);
