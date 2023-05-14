@@ -1,99 +1,126 @@
+import { useState } from "react";
+import { useSelect } from "downshift";
+
 export default function SelectInput() {
-  return (
-    <label className="select-input-container">
-      {/* <label
-        htmlFor="region-selection"
-        className="visually-hidden"
-      >
-        Filter by Region
-      </label> */}
-      <select
-        name="region"
-        id="region-selection"
-        className="select-input"
-        defaultValue=""
-      >
-        <option
-          value=""
-          disabled
+  const arrowSVG = (
+    <svg
+      className="arrow-svg"
+      fill="currentColor"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 330 330"
+    >
+      <path
+        d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+      />
+    </svg>
+  );
+
+  const regions = [
+    { region: "Africa" },
+    { region: "America" },
+    { region: "Asia" },
+    { region: "Europa" },
+    { region: "Oceania" },
+  ];
+  function itemToString(item) {
+    return item ? item.title : "";
+  }
+  function stateReducer(state, actionAndChanges) {
+    const { changes, type } = actionAndChanges;
+    switch (type) {
+      case useSelect.stateChangeTypes.MenuKeyDownEnter:
+      case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
+      case useSelect.stateChangeTypes.ItemClick:
+        return {
+          ...changes,
+          isOpen: true, // keep menu open after selection.
+          highlightedIndex: state.highlightedIndex,
+        };
+      default:
+        return changes;
+    }
+  }
+
+  function Select() {
+    const [selectedItems, setSelectedItems] = useState([]);
+    const {
+      isOpen,
+      selectedItem,
+      getToggleButtonProps,
+      getLabelProps,
+      getMenuProps,
+      highlightedIndex,
+      getItemProps,
+    } = useSelect({
+      items: regions,
+      itemToString,
+      stateReducer,
+      selectedItem: null,
+      onSelectedItemChange: ({ selectedItem }) => {
+        if (!selectedItem) {
+          return;
+        }
+
+        const index = selectedItems.indexOf(selectedItem);
+
+        if (index > 0) {
+          setSelectedItems([...selectedItems.slice(0, index), ...selectedItems.slice(index + 1)]);
+        } else if (index === 0) {
+          setSelectedItems([...selectedItems.slice(1)]);
+        } else {
+          setSelectedItems([...selectedItems, selectedItem]);
+        }
+      },
+    });
+
+    return (
+      <div className="select">
+        <label
+          {...getLabelProps()}
+          className="visually-hidden"
         >
           Filter by Region
-        </option>
-        <option value="africa">africa</option>
-        <option value="america">america</option>
-        <option value="asia">asia</option>
-        <option value="europe">europe</option>
-        <option value="oceania">oceania</option>
-      </select>
-    </label>
-  );
+        </label>
+        <div
+          className="select__text"
+          {...getToggleButtonProps()}
+        >
+          <span>Filter by Region</span>
+          <span>{arrowSVG}</span>
+        </div>
+        <ul
+          className="select__list"
+          {...getMenuProps()}
+        >
+          {isOpen &&
+            regions.map((item, index) => (
+              <li
+                className={`select__list-item ${highlightedIndex === index ? "highlighted" : ""}`}
+                key={`${item.value}${index}`}
+                {...getItemProps({
+                  item,
+                  index,
+                  "aria-selected": selectedItems.includes(item),
+                })}
+              >
+                <input
+                  type="checkbox"
+                  className="select__list-item-input"
+                  checked={selectedItems.includes(item)}
+                  value={item}
+                  onChange={() => null}
+                />
+                <span>{item.region}</span>
+              </li>
+            ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return <Select />;
 }
-
-// import * as React from "react";
-// import { render } from "react-dom";
-// import Downshift from "downshift";
-
-// export default function SelectInput() {
-//   const items = [
-//     { value: "apple" },
-//     { value: "pear" },
-//     { value: "orange" },
-//     { value: "grape" },
-//     { value: "banana" },
-//   ];
-
-//   // render(
-//   (
-//     <Downshift
-//       onChange={(selection) =>
-//         alert(selection ? `You selected ${selection.value}` : "Selection Cleared")
-//       }
-//       itemToString={(item) => (item ? item.value : "")}
-//     >
-//       {({
-//         getInputProps,
-//         getItemProps,
-//         getLabelProps,
-//         getMenuProps,
-//         isOpen,
-//         inputValue,
-//         highlightedIndex,
-//         selectedItem,
-//         getRootProps,
-//       }) => (
-//         <div>
-//           <label {...getLabelProps()}>Enter a fruit</label>
-//           <div
-//             style={{ display: "inline-block" }}
-//             {...getRootProps({}, { suppressRefError: true })}
-//           >
-//             <input {...getInputProps()} />
-//           </div>
-//           <ul {...getMenuProps()}>
-//             {isOpen
-//               ? items
-//                   .filter((item) => !inputValue || item.value.includes(inputValue))
-//                   .map((item, index) => (
-//                     <li
-//                       {...getItemProps({
-//                         key: item.value,
-//                         index,
-//                         item,
-//                         style: {
-//                           backgroundColor: highlightedIndex === index ? "lightgray" : "white",
-//                           fontWeight: selectedItem === item ? "bold" : "normal",
-//                         },
-//                       })}
-//                     >
-//                       {item.value}
-//                     </li>
-//                   ))
-//               : null}
-//           </ul>
-//         </div>
-//       )}
-//     </Downshift>
-//   ),
-//     document.getElementById("root");
-//   // );
-// }

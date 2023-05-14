@@ -1,29 +1,99 @@
 @use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
+@use "../../abstracts/mixins" as *;
 
-.select-input-container {
-  min-width: fit-content;
-  padding-right: 1rem;
+.select {
+  position: relative;
+  @include flex(row, stretch, stretch);
+  padding: 1rem;
   background-color: var(--select-input-background);
-  outline: func.rem(1) solid transparent;
+  outline: func.rem(0.5) solid transparent;
   border-radius: v.$block-border-radius;
-  overflow: hidden;
   box-shadow: v.$box-shadow;
   cursor: pointer;
   transition: v.$main-transition;
   &:where(:hover, :focus-within) {
-    outline: func.rem(1) solid var(--select-input-outline-color);
+    outline: func.rem(0.5) solid var(--select-input-outline-color);
   }
-}
 
-.select-input {
-  height: 100%;
-  padding: 1rem;
-  padding-right: 3rem;
-  background: inherit;
-  border: none;
-  outline: none;
-  font: inherit;
-  color: var(--select-input-text-color);
-  cursor: inherit;
+  &__text {
+    @include flex(row, center, center);
+    gap: 3rem;
+    color: var(--select-input-text-color);
+    outline: none;
+  }
+
+  &__list {
+    position: absolute;
+    width: 100%;
+    top: 4rem;
+    left: 0;
+    z-index: 1;
+    background: inherit;
+    overflow: hidden;
+    color: var(--select-input-text-color);
+    border-radius: v.$block-border-radius;
+    box-shadow: v.$box-shadow;
+  }
+
+  &__list-item {
+    @include flex(row, flex-start, center);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    transition: v.$main-transition;
+
+    &[aria-selected="true"] {
+      background-color: var(--select-input-list-item-selected-background);
+    }
+    &.highlighted {
+      opacity: 0.5;
+    }
+  }
+
+  input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+
+    position: relative;
+    margin: 0;
+    margin-right: 1rem;
+    height: func.rem(16);
+    aspect-ratio: 1;
+    background-color: var(--select-input-background-input);
+    border-radius: 0.35em;
+    cursor: inherit;
+    color: inherit;
+    padding: 0.1em;
+    &::after {
+      content: "✓";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      font-weight: bold;
+      font-size: func.rem(12);
+      color: inherit;
+      transition: v.$main-transition;
+      opacity: 0;
+    }
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: var(--select-input-background-input-highlighted);
+    transition: v.$main-transition;
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  .highlighted input[type="checkbox"]::after {
+    opacity: 0.5;
+  }
+
+  .arrow-svg {
+    height: func.rem(10);
+    aspect-ratio: 1;
+    font-weight: 800;
+  }
 }

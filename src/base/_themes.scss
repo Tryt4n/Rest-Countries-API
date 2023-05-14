@@ -28,6 +28,9 @@
   --select-input-background: var(--white);
   --select-input-text-color: var(--very-dark-blue);
   --select-input-outline-color: var(--black);
+  --select-input-list-item-selected-background: hsl(0, 0%, 85%);
+  --select-input-background-input: hsl(0, 0%, 85%);
+  --select-input-background-input-highlighted: hsl(0, 0%, 60%);
 
   //* Card
   --country-card-background: var(--white);
@@ -65,6 +68,9 @@
   --select-input-background: var(--dark-blue);
   --select-input-text-color: var(--white);
   --select-input-outline-color: var(--white);
+  --select-input-list-item-selected-background: hsl(207, 26%, 30%);
+  --select-input-background-input: var(--very-dark-blue-bg);
+  --select-input-background-input-highlighted: var(--dark-blue);
 
   //* Card
   --country-card-background: var(--dark-blue);

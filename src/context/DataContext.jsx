@@ -19,7 +19,16 @@ export function DataProvider({ children }) {
       .get(API_URL, { signal: controller.signal })
       .then((res) => {
         const data = res.data;
-        setData(data);
+        const alphabeticalData = data.sort((a, b) => {
+          if (a.name.common < b.name.common) {
+            return -1;
+          } else if (a.name.common > b.name.common) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        setData(alphabeticalData);
       })
       .catch((error) => {
         if (axios.isCancel(error)) {

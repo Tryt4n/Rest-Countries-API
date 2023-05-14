@@ -49,6 +49,9 @@
     place-items: center;
     aspect-ratio: 16 / 9;
     scale: 0.75;
+    @media (width <= func.rem(768)) {
+      width: min(func.rem(450), 100%);
+    }
   }
 
   &__text-line:not(:last-child) {
