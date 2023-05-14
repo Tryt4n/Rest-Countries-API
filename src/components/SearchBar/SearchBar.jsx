@@ -1,4 +1,18 @@
-export default function SearchBar() {
+import { useContext, useState } from "react";
+import DataContext from "../../context/DataContext";
+
+export default function SearchBar({ setFilteredData }) {
+  const { data } = useContext(DataContext);
+  const [searchText, setSearchText] = useState("");
+
+  function handleSearchChange(e) {
+    setSearchText(e.target.value);
+    const filtered = data.filter((country) => {
+      return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setFilteredData(filtered);
+  }
+
   return (
     <label
       htmlFor="country-searchbar"
@@ -17,11 +31,14 @@ export default function SearchBar() {
       </svg>
       <input
         type="search"
-        name=""
+        name="searchbar"
         id="country-searchbar"
         className="country-searchbar__input"
         placeholder="Search for a country..."
+        pattern="[a-zA-Z]"
         maxLength={30}
+        value={searchText}
+        onChange={handleSearchChange}
       />
     </label>
   );

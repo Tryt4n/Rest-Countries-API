@@ -1,23 +1,45 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useSelect } from "downshift";
 
-export default function SelectInput() {
-  const arrowSVG = (
-    <svg
-      className="arrow-svg"
-      fill="currentColor"
-      version="1.1"
-      id="Layer_1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 330 330"
-    >
-      <path
-        d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
-  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
-  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
-      />
-    </svg>
-  );
+import DataContext from "../../context/DataContext";
+
+const arrowSVG = (
+  <svg
+    className="arrow-svg"
+    fill="currentColor"
+    version="1.1"
+    id="Layer_1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 330 330"
+  >
+    <path
+      d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+    />
+  </svg>
+);
+
+export default function SelectInput({ setFilteredData }) {
+  const { data } = useContext(DataContext);
+  const [searchingRegions, setSearchingRegions] = useState([]);
+
+  // function handleSearchingRegions(e) {
+  //   setSearchingRegions();
+  //   // const filtered = data.filter((country) => {
+  //   //   return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
+  //   // });
+  //   const regions = searchingRegions.map((item) => item.region);
+  //   const filtered = data.filter((country) => {
+  //     // return country.region.toLowerCase()
+  //     return regions.includes(country.region);
+  //   });
+  //   setFilteredData(filtered);
+  // }
+
+  useEffect(() => {
+    // console.log(searchingRegions);
+  }, [searchingRegions, setSearchingRegions]);
 
   const regions = [
     { region: "Africa" },
@@ -64,7 +86,6 @@ export default function SelectInput() {
         if (!selectedItem) {
           return;
         }
-
         const index = selectedItems.indexOf(selectedItem);
 
         if (index > 0) {
@@ -74,6 +95,18 @@ export default function SelectInput() {
         } else {
           setSelectedItems([...selectedItems, selectedItem]);
         }
+        // setSearchingRegions((prevState) => {
+        //   const index = prevState.findIndex((item) => item.region === selectedItem.region);
+        //   if (index > -1) {
+        //     //* If region already exists, it removes it from the array
+        //     const newState = [...prevState];
+        //     newState.splice(index, 1);
+        //     return newState;
+        //   } else {
+        //     //* Adding new region to the array
+        //     return [...prevState, selectedItem];
+        //   }
+        // });
       },
     });
 
