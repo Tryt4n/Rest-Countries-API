@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
 import Card from "../../components/Card/Card";
@@ -6,12 +6,11 @@ import Navbar from "../Navbar/Navbar";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function MainContent() {
-  const { data, isLoading } = useContext(DataContext);
-  const [filteredData, setFilteredData] = useState(data);
+  const { data, isLoading, filteredData } = useContext(DataContext);
 
   return (
     <main className="container">
-      <Navbar setFilteredData={setFilteredData} />
+      <Navbar />
       {!isLoading ? (
         <div className="country-cards-grid">
           {filteredData === ""

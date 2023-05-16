@@ -1,17 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
-export default function SearchBar({ setFilteredData }) {
-  const { data } = useContext(DataContext);
-  const [searchText, setSearchText] = useState("");
-
-  function handleSearchChange(e) {
-    setSearchText(e.target.value);
-    const filtered = data.filter((country) => {
-      return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    setFilteredData(filtered);
-  }
+export default function SearchBar() {
+  const { searchText, handleSearchChange } = useContext(DataContext);
 
   return (
     <label

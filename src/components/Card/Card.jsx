@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
+import { useContext } from "react";
+import DataContext from "../../context/DataContext";
+
 export default function Card({ data, alignLeft }) {
+  const { searchText } = useContext(DataContext);
+
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isMatch, setIsMatch] = useState(false);
+
+  useEffect(() => {
+    setIsMatch(data.name.common.toLowerCase().includes(searchText.toLowerCase()));
+  }, [data.name.common, searchText]);
 
   function handleImageLoad() {
     setIsImageLoaded(true);
@@ -33,7 +43,23 @@ export default function Card({ data, alignLeft }) {
           onLoad={handleImageLoad}
         />
         <div className="country-card__text-wrapper">
-          <h2 className="country-card__name">{data.name.common}</h2>
+          <h2 className="country-card__name">
+            {isMatch
+              ? data.name.common.split(new RegExp(`(${searchText})`, "gi")).map((part, index) =>
+                  part.toLowerCase() === searchText.toLowerCase() ? (
+                    <mark
+                      className="country-card__marked-text"
+                      key={index}
+                    >
+                      {part}
+                    </mark>
+                  ) : (
+                    part
+                  )
+                )
+              : data.name.common}
+          </h2>
+
           <div className="country-card__text-line">
             <b className="country-card__text-bolded">Population:</b>
             &nbsp;

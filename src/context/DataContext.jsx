@@ -10,8 +10,14 @@ export function DataProvider({ children }) {
   const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const [filteredData, setFilteredData] = useState(data);
+  const [selectedRegions, setSelectedRegions] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
   const API_URL = `https://restcountries.com/v3.1/all`;
   const controller = new AbortController();
+
+  //* API
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -41,12 +47,65 @@ export function DataProvider({ children }) {
     return () => controller.abort();
   }, [API_URL]);
 
+  //* Set filtered regions
+  function filterRegions() {
+    if (selectedRegions.length !== 0 && searchText) {
+      const filteredRegions = data.filter(
+        (country) =>
+          selectedRegions.some((item) => item.region === country.region) &&
+          country.name.common.toLowerCase().includes(searchText.toLowerCase())
+      );
+      return filteredRegions;
+    } else if (selectedRegions.length !== 0) {
+      const filteredRegions = data.filter((country) =>
+        selectedRegions.some((item) => item.region === country.region)
+      );
+      return filteredRegions;
+    } else if (searchText) {
+      const filteredRegions = data.filter((country) =>
+        country.name.common.toLowerCase().includes(searchText.toLowerCase())
+      );
+      return filteredRegions;
+    } else {
+      return data;
+    }
+  }
+
+  //* Set searching countries
+  function handleSearchChange(e) {
+    setSearchText(e.target.value);
+    const filtered = filterRegions().filter((country) => {
+      if (selectedRegions.length !== 0) {
+        return (
+          country.name.common.toLowerCase().includes(e.target.value.toLowerCase()) &&
+          selectedRegions.some((item) => item.region === country.region)
+        );
+      } else {
+        return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
+      }
+    });
+    setFilteredData(filtered);
+  }
+
+  //* Display filtered regions
+  useEffect(() => {
+    const filtered = filterRegions();
+    setFilteredData(filtered);
+  }, [selectedRegions, data, searchText]);
+
   return (
     <DataContext.Provider
       value={{
         data: data,
         setData: setData,
         isLoading: isLoading,
+        filteredData: filteredData,
+        setFilteredData: setFilteredData,
+        selectedRegions: selectedRegions,
+        setSelectedRegions: setSelectedRegions,
+        searchText: searchText,
+        setSearchText: setSearchText,
+        handleSearchChange: handleSearchChange,
       }}
     >
       {children}

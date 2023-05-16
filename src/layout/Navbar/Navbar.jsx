@@ -1,7 +1,7 @@
 import SearchBar from "../../components/SearchBar/SearchBar";
 import SelectInput from "../../components/SelectInput/SelectInput";
 
-export default function Navbar({ setFilteredData }) {
+export default function Navbar() {
   return (
     <nav className="navigation-bar">
       <h2 className="visually-hidden">Main Navigation bar</h2>
@@ -9,8 +9,8 @@ export default function Navbar({ setFilteredData }) {
         className="navigation-bar__form-container"
         onSubmit={(e) => e.preventDefault()}
       >
-        <SearchBar setFilteredData={setFilteredData} />
-        <SelectInput setFilteredData={setFilteredData} />
+        <SearchBar />
+        <SelectInput />
       </form>
     </nav>
   );

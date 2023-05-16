@@ -65,6 +65,10 @@
   &__text-output {
     color: var(--country-card-text-output-color);
   }
+
+  &__marked-text {
+    background: #ff9632;
+  }
 }
 
 @keyframes shake {

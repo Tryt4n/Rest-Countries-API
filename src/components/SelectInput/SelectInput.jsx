@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useSelect } from "downshift";
 
 import DataContext from "../../context/DataContext";
@@ -20,140 +20,106 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
   </svg>
 );
 
-export default function SelectInput({ setFilteredData }) {
-  const { data } = useContext(DataContext);
-  const [searchingRegions, setSearchingRegions] = useState([]);
+const regions = [
+  { region: "Africa" },
+  { region: "Americas" },
+  { region: "Asia" },
+  { region: "Europe" },
+  { region: "Oceania" },
+];
 
-  // function handleSearchingRegions(e) {
-  //   setSearchingRegions();
-  //   // const filtered = data.filter((country) => {
-  //   //   return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
-  //   // });
-  //   const regions = searchingRegions.map((item) => item.region);
-  //   const filtered = data.filter((country) => {
-  //     // return country.region.toLowerCase()
-  //     return regions.includes(country.region);
-  //   });
-  //   setFilteredData(filtered);
-  // }
-
-  useEffect(() => {
-    // console.log(searchingRegions);
-  }, [searchingRegions, setSearchingRegions]);
-
-  const regions = [
-    { region: "Africa" },
-    { region: "America" },
-    { region: "Asia" },
-    { region: "Europa" },
-    { region: "Oceania" },
-  ];
-  function itemToString(item) {
-    return item ? item.title : "";
+function itemToString(item) {
+  return item ? item.title : "";
+}
+function stateReducer(state, actionAndChanges) {
+  const { changes, type } = actionAndChanges;
+  switch (type) {
+    case useSelect.stateChangeTypes.MenuKeyDownEnter:
+    case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
+    case useSelect.stateChangeTypes.ItemClick:
+      return {
+        ...changes,
+        isOpen: true, // keep menu open after selection.
+        highlightedIndex: state.highlightedIndex,
+      };
+    default:
+      return changes;
   }
-  function stateReducer(state, actionAndChanges) {
-    const { changes, type } = actionAndChanges;
-    switch (type) {
-      case useSelect.stateChangeTypes.MenuKeyDownEnter:
-      case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
-      case useSelect.stateChangeTypes.ItemClick:
-        return {
-          ...changes,
-          isOpen: true, // keep menu open after selection.
-          highlightedIndex: state.highlightedIndex,
-        };
-      default:
-        return changes;
-    }
-  }
+}
 
-  function Select() {
-    const [selectedItems, setSelectedItems] = useState([]);
-    const {
-      isOpen,
-      selectedItem,
-      getToggleButtonProps,
-      getLabelProps,
-      getMenuProps,
-      highlightedIndex,
-      getItemProps,
-    } = useSelect({
-      items: regions,
-      itemToString,
-      stateReducer,
-      selectedItem: null,
-      onSelectedItemChange: ({ selectedItem }) => {
-        if (!selectedItem) {
-          return;
-        }
-        const index = selectedItems.indexOf(selectedItem);
+export default function SelectInput() {
+  const { selectedRegions, setSelectedRegions } = useContext(DataContext);
 
-        if (index > 0) {
-          setSelectedItems([...selectedItems.slice(0, index), ...selectedItems.slice(index + 1)]);
-        } else if (index === 0) {
-          setSelectedItems([...selectedItems.slice(1)]);
+  const {
+    isOpen,
+    selectedItem,
+    getToggleButtonProps,
+    getLabelProps,
+    getMenuProps,
+    highlightedIndex,
+    getItemProps,
+  } = useSelect({
+    items: regions,
+    itemToString,
+    stateReducer,
+    selectedItem: null,
+    onSelectedItemChange: ({ selectedItem }) => {
+      if (!selectedItem) {
+        return;
+      }
+
+      setSelectedRegions((prevItems) => {
+        const updatedItems = prevItems.filter((item) => item.region !== selectedItem.region);
+        if (updatedItems.length === prevItems.length) {
+          return [...prevItems, selectedItem];
         } else {
-          setSelectedItems([...selectedItems, selectedItem]);
+          return updatedItems;
         }
-        // setSearchingRegions((prevState) => {
-        //   const index = prevState.findIndex((item) => item.region === selectedItem.region);
-        //   if (index > -1) {
-        //     //* If region already exists, it removes it from the array
-        //     const newState = [...prevState];
-        //     newState.splice(index, 1);
-        //     return newState;
-        //   } else {
-        //     //* Adding new region to the array
-        //     return [...prevState, selectedItem];
-        //   }
-        // });
-      },
-    });
+      });
+    },
+  });
 
-    return (
-      <div className="select">
-        <label
-          {...getLabelProps()}
-          className="visually-hidden"
-        >
-          Filter by Region
-        </label>
-        <div
-          className="select__text"
-          {...getToggleButtonProps()}
-        >
-          <span>Filter by Region</span>
-          <span>{arrowSVG}</span>
-        </div>
-        <ul
-          className="select__list"
-          {...getMenuProps()}
-        >
-          {isOpen &&
-            regions.map((item, index) => (
-              <li
-                className={`select__list-item ${highlightedIndex === index ? "highlighted" : ""}`}
-                key={`${item.value}${index}`}
-                {...getItemProps({
-                  item,
-                  index,
-                  "aria-selected": selectedItems.includes(item),
-                })}
-              >
-                <input
-                  type="checkbox"
-                  className="select__list-item-input"
-                  checked={selectedItems.includes(item)}
-                  value={item}
-                  onChange={() => null}
-                />
-                <span>{item.region}</span>
-              </li>
-            ))}
-        </ul>
+  return (
+    <div className="select">
+      <label
+        {...getLabelProps()}
+        className="visually-hidden"
+      >
+        Filter by Region
+      </label>
+      <div
+        className="select__text"
+        {...getToggleButtonProps()}
+      >
+        <span>Filter by Region</span>
+        <span>{arrowSVG}</span>
       </div>
-    );
-  }
-
-  return <Select />;
+      <ul
+        className="select__list"
+        {...getMenuProps()}
+      >
+        {isOpen &&
+          regions.map((item, index) => (
+            <li
+              className={`select__list-item ${highlightedIndex === index ? "highlighted" : ""}`}
+              key={`${item.value}${index}`}
+              {...getItemProps({
+                item,
+                index,
+                "aria-selected": selectedRegions.includes(item),
+              })}
+            >
+              <input
+                type="checkbox"
+                className="select__list-item-input"
+                checked={selectedRegions.includes(item)}
+                value={item.region}
+                onChange={() => null}
+              />
+              <span>{item.region}</span>
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
 }
