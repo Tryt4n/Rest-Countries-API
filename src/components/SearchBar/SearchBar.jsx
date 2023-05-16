@@ -4,6 +4,16 @@ import DataContext from "../../context/DataContext";
 export default function SearchBar() {
   const { searchText, handleSearchChange } = useContext(DataContext);
 
+  const handleKeyPress = (event) => {
+    const charCode = event.which || event.keyCode;
+    const char = String.fromCharCode(charCode);
+    const pattern = /[a-zA-Z\s]/;
+
+    if (!pattern.test(char)) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <label
       htmlFor="country-searchbar"
@@ -30,6 +40,7 @@ export default function SearchBar() {
         maxLength={30}
         value={searchText}
         onChange={handleSearchChange}
+        onKeyPress={handleKeyPress}
       />
     </label>
   );

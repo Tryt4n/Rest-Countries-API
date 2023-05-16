@@ -1,13 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-const DataContext = createContext({
-  data: {},
-  setData: () => {},
-});
+const DataContext = createContext();
 
 export function DataProvider({ children }) {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [filteredData, setFilteredData] = useState(data);

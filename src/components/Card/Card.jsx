@@ -5,7 +5,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
-export default function Card({ data, alignLeft }) {
+export default function Card({ data, alignLeft, setDetailInfo, setIsDetailOpen }) {
   const { searchText } = useContext(DataContext);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -23,11 +23,12 @@ export default function Card({ data, alignLeft }) {
     <a
       href="#"
       className="country-card__link"
+      onClick={() => {
+        setDetailInfo(data);
+        setIsDetailOpen(true);
+      }}
     >
-      <article
-        className="country-card"
-        onClick={() => console.log(data)}
-      >
+      <article className="country-card">
         {!isImageLoaded && (
           <div className="country-card__img-loading-spinner">
             <LoadingSpinner />
@@ -42,6 +43,20 @@ export default function Card({ data, alignLeft }) {
           data-align-left={alignLeft ? alignLeft : undefined}
           onLoad={handleImageLoad}
         />
+        {/* {!isImageLoaded && (
+          <div className="country-card__img-loading-spinner">
+            <LoadingSpinner />
+          </div>
+        )}
+        <img
+          src={data.flags.svg}
+          alt={`${data.name.official} flag`}
+          aria-label={data.flags.alt ? data.flags.alt : undefined}
+          loading="lazy"
+          className={`${!isImageLoaded ? "visually-hidden" : "country-card__img"}`}
+          data-align-left={alignLeft ? alignLeft : undefined}
+          onLoad={handleImageLoad}
+        ></img> */}
         <div className="country-card__text-wrapper">
           <h2 className="country-card__name">
             {isMatch

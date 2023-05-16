@@ -1,0 +1,14 @@
+@use "../../abstracts/mixins" as *;
+
+.detail-info {
+  @include flex(row);
+  gap: 3rem;
+
+  &__img {
+    width: 50%;
+  }
+
+  &__data-container {
+    flex-grow: 1;
+  }
+}
