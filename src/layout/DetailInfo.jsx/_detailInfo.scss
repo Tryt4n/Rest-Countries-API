@@ -1,14 +1,111 @@
 @use "../../abstracts/mixins" as *;
+@use "../../abstracts/variables" as v;
+@use "../../base/functions" as func;
 
 .detail-info {
-  @include flex(row);
-  gap: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  gap: 10%;
+  margin-block: 3rem;
+  color: var(--country-card-text-color);
+  font-size: func.rem(14);
+  @media (width <= func.rem(1024)) {
+    grid-template-columns: 1fr;
+  }
+  @media (width <= func.rem(768)) {
+    gap: 3rem;
+  }
 
   &__img {
-    width: 50%;
+    max-width: 100%;
+    height: auto;
   }
 
   &__data-container {
-    flex-grow: 1;
+    @include flex(column, space-evenly);
+    gap: 3rem;
+    @media (width <= func.rem(1024)) and (width > func.rem(768)) {
+      align-items: center;
+    }
+    @media (width <= func.rem(768)) {
+      gap: 2rem;
+    }
+  }
+
+  &__header {
+    font-size: clamp(1rem, 5vw, 2rem);
+    @media (width <= func.rem(1024)) {
+    }
+  }
+
+  &__list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    color: var(--country-card-text-output-color);
+    @media (width <= func.rem(1024)) and (width > func.rem(768)) {
+      & li {
+        padding-inline: 3rem;
+      }
+    }
+    @media (width <= func.rem(768)) {
+      grid-template-columns: 1fr;
+      justify-content: start;
+    }
+
+    & b {
+      font-weight: 600;
+      color: var(--country-card-text-color);
+    }
+  }
+
+  &__list-item-wrapper {
+    @include flex(row, flex-start, center);
+  }
+
+  &__border-countries-navigation {
+    @include flex(row, flex-start, stretch);
+    gap: 1rem;
+    margin-top: 1rem;
+    @media (width <= func.rem(1024)) {
+      @include flex(column, flex-start, center);
+      margin-bottom: 3rem;
+    }
+    @media (width <= func.rem(768)) {
+      align-items: flex-start;
+    }
+  }
+
+  &__border-countries-header {
+    font-size: inherit;
+    font-weight: 600;
+    line-height: func.rem(28);
+  }
+
+  &__border-countries-buttons-container {
+    @include flex();
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__border-countries-btn {
+    min-width: 17ch;
+    background: var(--header-bg);
+    border: none;
+    border-radius: v.$block-border-radius;
+    box-shadow: v.$box-shadow;
+    padding-block: 0.5em;
+    font: inherit;
+    color: var(--header-text);
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: v.$main-transition;
+    outline: func.rem(1) solid transparent;
+
+    &:where(:hover, :focus-visible) {
+      opacity: 0.5;
+      outline: func.rem(1) solid var(--searchbar-outline-color);
+    }
   }
 }

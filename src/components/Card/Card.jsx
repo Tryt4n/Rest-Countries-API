@@ -43,20 +43,6 @@ export default function Card({ data, alignLeft, setDetailInfo, setIsDetailOpen }
           data-align-left={alignLeft ? alignLeft : undefined}
           onLoad={handleImageLoad}
         />
-        {/* {!isImageLoaded && (
-          <div className="country-card__img-loading-spinner">
-            <LoadingSpinner />
-          </div>
-        )}
-        <img
-          src={data.flags.svg}
-          alt={`${data.name.official} flag`}
-          aria-label={data.flags.alt ? data.flags.alt : undefined}
-          loading="lazy"
-          className={`${!isImageLoaded ? "visually-hidden" : "country-card__img"}`}
-          data-align-left={alignLeft ? alignLeft : undefined}
-          onLoad={handleImageLoad}
-        ></img> */}
         <div className="country-card__text-wrapper">
           <h2 className="country-card__name">
             {isMatch

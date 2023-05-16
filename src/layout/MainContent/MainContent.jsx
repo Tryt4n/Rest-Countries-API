@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
 
 import Card from "../../components/Card/Card";
@@ -10,10 +10,6 @@ export default function MainContent() {
   const { data, isLoading, filteredData } = useContext(DataContext);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [detailInfo, setDetailInfo] = useState({});
-
-  useEffect(() => {
-    console.log(detailInfo);
-  }, [detailInfo, setDetailInfo]);
 
   return (
     <main className="container">

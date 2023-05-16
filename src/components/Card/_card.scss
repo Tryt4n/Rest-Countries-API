@@ -2,6 +2,7 @@
 @use "../../base/functions" as func;
 
 .country-card {
+  position: relative;
   border-radius: v.$block-border-radius;
   overflow: hidden;
   background-color: var(--country-card-background);
@@ -45,6 +46,8 @@
   }
 
   &__img-loading-spinner {
+    position: absolute;
+    inset: 0;
     display: grid;
     place-items: center;
     aspect-ratio: 16 / 9;
