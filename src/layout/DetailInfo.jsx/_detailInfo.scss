@@ -34,7 +34,7 @@
   }
 
   &__header {
-    font-size: clamp(1rem, 5vw, 2rem);
+    font-size: v.$font-size-header;
     @media (width <= func.rem(1024)) {
     }
   }
@@ -62,6 +62,7 @@
 
   &__list-item-wrapper {
     @include flex(row, flex-start, center);
+    gap: 0.25em;
   }
 
   &__border-countries-navigation {

@@ -5,7 +5,7 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
-export default function Card({ data, alignLeft, setDetailInfo, setIsDetailOpen }) {
+export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
   const { searchText } = useContext(DataContext);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -26,6 +26,7 @@ export default function Card({ data, alignLeft, setDetailInfo, setIsDetailOpen }
       onClick={() => {
         setDetailInfo(data);
         setIsDetailOpen(true);
+        console.log(data);
       }}
     >
       <article className="country-card">
@@ -40,7 +41,6 @@ export default function Card({ data, alignLeft, setDetailInfo, setIsDetailOpen }
           aria-label={data.flags.alt ? data.flags.alt : undefined}
           loading="lazy"
           className="country-card__img"
-          data-align-left={alignLeft ? alignLeft : undefined}
           onLoad={handleImageLoad}
         />
         <div className="country-card__text-wrapper">

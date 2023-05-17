@@ -41,9 +41,6 @@
     object-fit: cover;
     aspect-ratio: 16 / 9;
   }
-  &__img[data-align-left] {
-    object-position: left;
-  }
 
   &__img-loading-spinner {
     position: absolute;

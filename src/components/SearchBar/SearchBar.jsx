@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import DataContext from "../../context/DataContext";
 
 export default function SearchBar() {
   const { searchText, handleSearchChange } = useContext(DataContext);
+  const [searchBarWarning, setSearchBarWarning] = useState(false);
 
   const handleKeyPress = (event) => {
     const charCode = event.which || event.keyCode;
@@ -11,8 +12,15 @@ export default function SearchBar() {
 
     if (!pattern.test(char)) {
       event.preventDefault();
+      setSearchBarWarning(true);
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSearchBarWarning(false);
+    }, 3000);
+  }, [searchBarWarning]);
 
   return (
     <label
@@ -42,6 +50,14 @@ export default function SearchBar() {
         onChange={handleSearchChange}
         onKeyPress={handleKeyPress}
       />
+      {searchBarWarning && (
+        <dialog
+          className="country-searchbar__warning"
+          open={searchBarWarning}
+        >
+          Not allowed characters
+        </dialog>
+      )}
     </label>
   );
 }

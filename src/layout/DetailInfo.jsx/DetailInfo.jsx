@@ -23,7 +23,11 @@ export default function DetailInfo({ countryData }) {
           <li className="detail-info__list-item-wrapper">
             <b>Native Name:</b>
             &nbsp;
-            <span>{Object.values(countryData.name.nativeName)[0].common}</span>
+            {countryData.name.nativeName == null ? (
+              "none"
+            ) : (
+              <span>{Object.values(countryData.name.nativeName)[0].common}</span>
+            )}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>Population:</b>
@@ -38,18 +42,20 @@ export default function DetailInfo({ countryData }) {
           <li className="detail-info__list-item-wrapper">
             <b>Sub Region:</b>
             &nbsp;
-            <span>{countryData.subregion}</span>
+            {!countryData.subregion ? "none" : <span>{countryData.subregion}</span>}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>Capital:</b>
             &nbsp;
             <div>
-              {countryData.capital.map((capital, index) => (
-                <React.Fragment key={capital}>
-                  {index > 0 && ", "}
-                  <span key={capital}>{capital}</span>
-                </React.Fragment>
-              ))}
+              {countryData.capital == null
+                ? "none"
+                : countryData.capital.map((capital, index) => (
+                    <React.Fragment key={capital}>
+                      {index > 0 && ", "}
+                      <span key={capital}>{capital}</span>
+                    </React.Fragment>
+                  ))}
             </div>
           </li>
           <li className="detail-info__list-item-wrapper">
@@ -64,20 +70,28 @@ export default function DetailInfo({ countryData }) {
           <li className="detail-info__list-item-wrapper">
             <b>Currencies:</b>
             &nbsp;
-            <span title={`Symbol: ${Object.values(countryData.currencies)[0].symbol}`}>
-              {Object.values(countryData.currencies)[0].name}
-            </span>
+            {countryData.currencies == null ? (
+              "none"
+            ) : (
+              <span title={`Symbol: ${Object.values(countryData.currencies)[0].symbol}`}>
+                {Object.values(countryData.currencies)[0].name}
+              </span>
+            )}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>Languages:</b>
             &nbsp;
             <div>
-              {Object.entries(countryData.languages).map(([languageCode, languageName], index) => (
-                <React.Fragment key={languageCode}>
-                  {index > 0 && ", "}
-                  <span>{languageName}</span>
-                </React.Fragment>
-              ))}
+              {countryData.languages == null
+                ? "none"
+                : Object.entries(countryData.languages).map(
+                    ([languageCode, languageName], index) => (
+                      <React.Fragment key={languageCode}>
+                        {index > 0 && ", "}
+                        <span>{languageName}</span>
+                      </React.Fragment>
+                    )
+                  )}
             </div>
           </li>
         </ul>

@@ -52,7 +52,7 @@ export default function SelectInput() {
 
   const {
     isOpen,
-    selectedItem,
+    // selectedItem,
     getToggleButtonProps,
     getLabelProps,
     getMenuProps,

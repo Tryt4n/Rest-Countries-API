@@ -6,6 +6,7 @@ const DataContext = createContext();
 export function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [nothingFound, setNothingFound] = useState(false);
 
   const [filteredData, setFilteredData] = useState(data);
   const [selectedRegions, setSelectedRegions] = useState([]);
@@ -88,7 +89,12 @@ export function DataProvider({ children }) {
   useEffect(() => {
     const filtered = filterRegions();
     setFilteredData(filtered);
-  }, [selectedRegions, data, searchText]);
+    if (searchText !== "" && filtered.length === 0) {
+      setNothingFound(true);
+    } else {
+      setNothingFound(false);
+    }
+  }, [selectedRegions, data, searchText, nothingFound]);
 
   return (
     <DataContext.Provider
@@ -96,6 +102,7 @@ export function DataProvider({ children }) {
         data: data,
         setData: setData,
         isLoading: isLoading,
+        nothingFound: nothingFound,
         filteredData: filteredData,
         setFilteredData: setFilteredData,
         selectedRegions: selectedRegions,

@@ -7,7 +7,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import DetailInfo from "../DetailInfo.jsx/DetailInfo";
 
 export default function MainContent() {
-  const { data, isLoading, filteredData } = useContext(DataContext);
+  const { data, isLoading, nothingFound, filteredData } = useContext(DataContext);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [detailInfo, setDetailInfo] = useState({});
 
@@ -20,24 +20,32 @@ export default function MainContent() {
       {!isDetailOpen ? (
         <>
           {!isLoading ? (
-            <div className="country-cards-grid">
-              {filteredData === ""
-                ? data.map((country) => (
-                    <Card
-                      key={country.cca3}
-                      data={country}
-                      setDetailInfo={setDetailInfo}
-                    />
-                  ))
-                : filteredData.map((country) => (
-                    <Card
-                      key={country.cca3}
-                      data={country}
-                      setDetailInfo={setDetailInfo}
-                      setIsDetailOpen={setIsDetailOpen}
-                    />
-                  ))}
-            </div>
+            <>
+              {!nothingFound ? (
+                <div className="country-cards-grid">
+                  {filteredData === ""
+                    ? data.map((country) => {
+                        return (
+                          <Card
+                            key={country.cca3}
+                            data={country}
+                            setDetailInfo={setDetailInfo}
+                          />
+                        );
+                      })
+                    : filteredData.map((country) => (
+                        <Card
+                          key={country.cca3}
+                          data={country}
+                          setDetailInfo={setDetailInfo}
+                          setIsDetailOpen={setIsDetailOpen}
+                        />
+                      ))}
+                </div>
+              ) : (
+                <h2 className="country-cards-grid__nothing-found">Nothing Found...</h2>
+              )}
+            </>
           ) : (
             <div className="country-loading-spinner-container">
               <LoadingSpinner />

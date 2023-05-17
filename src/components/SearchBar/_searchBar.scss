@@ -3,6 +3,7 @@
 @use "../../base/functions" as func;
 
 .country-searchbar {
+  position: relative;
   @include flex();
   gap: 1em;
   background: var(--searchbar-background);
@@ -51,6 +52,29 @@
   }
   &:where(:hover, :focus-within) .country-searchbar__icon {
     color: inherit;
+  }
+
+  &__warning {
+    position: absolute;
+    inset: 0;
+    padding: 0.75em;
+    background-color: var(--searchbar-background);
+    border: 1px solid hsl(0, 70%, 50%);
+    border-radius: v.$block-border-radius;
+    font-size: func.rem(14);
+    font-weight: 600;
+    color: hsl(0, 70%, 70%);
+    translate: -60% -150%;
+    @media (width <= func.rem(768)) {
+      scale: 0.85;
+      translate: -100% -135%;
+    }
+    @media (width <= func.rem(650)) {
+      translate: -50% -135%;
+    }
+    @media (width <= func.rem(400)) {
+      translate: -30% -135%;
+    }
   }
 }
 

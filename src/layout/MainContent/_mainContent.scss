@@ -1,3 +1,4 @@
+@use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
 
 .country-cards-grid {
@@ -15,6 +16,17 @@
   @media (width <= func.rem(768)) {
     grid-template-columns: 1fr;
     place-items: center;
+  }
+
+  &__nothing-found {
+    margin-top: 3rem;
+    font-size: v.$font-size-header;
+    letter-spacing: 0.075em;
+    text-align: center;
+    color: var(--header-text);
+    @media (width > func.rem(768)) and (height > func.rem(768)) {
+      margin-top: 10rem;
+    }
   }
 }
 
