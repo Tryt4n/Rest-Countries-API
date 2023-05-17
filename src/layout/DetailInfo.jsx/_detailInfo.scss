@@ -7,6 +7,7 @@
   grid-template-columns: 1fr 1fr;
   place-items: center;
   gap: 10%;
+  row-gap: 3rem;
   margin-block: 3rem;
   color: var(--country-card-text-color);
   font-size: func.rem(14);
@@ -62,7 +63,7 @@
 
   &__list-item-wrapper {
     @include flex(row, flex-start, center);
-    gap: 0.25em;
+    gap: 0.5em;
   }
 
   &__border-countries-navigation {
@@ -71,7 +72,6 @@
     margin-top: 1rem;
     @media (width <= func.rem(1024)) {
       @include flex(column, flex-start, center);
-      margin-bottom: 3rem;
     }
     @media (width <= func.rem(768)) {
       align-items: flex-start;
@@ -107,6 +107,100 @@
     &:where(:hover, :focus-visible) {
       opacity: 0.5;
       outline: func.rem(1) solid var(--searchbar-outline-color);
+    }
+  }
+
+  &__more-info-container {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  &__more-info-btn {
+    @include flex();
+    gap: 0.5em;
+    padding: 0.5em 1em;
+    translate: -1em;
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 800;
+    color: inherit;
+    cursor: pointer;
+    transition: v.$main-transition;
+    & .arrow-svg {
+      width: func.rem(10);
+      aspect-ratio: 1;
+    }
+    &:where(:hover, :focus-visible) {
+      opacity: 0.5;
+    }
+  }
+
+  &__more-info-list-container {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: v.$main-transition;
+    & > * {
+      overflow: hidden;
+    }
+    &.show {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__more-info-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    color: var(--country-card-text-output-color);
+    align-items: center;
+    @media (width <= func.rem(1024)) and (width > func.rem(768)) {
+      & li {
+        padding-inline: 3rem;
+      }
+    }
+    @media (width <= func.rem(768)) {
+      grid-template-columns: 1fr;
+      justify-content: start;
+    }
+    & b {
+      font-weight: 600;
+      color: var(--country-card-text-color);
+    }
+  }
+
+  &__more-info-list-item-wrapper {
+    @include flex(row, flex-start, center);
+    gap: 0.5em;
+    & > ::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  &__more-info-dialog-wrapper {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    @media (width <= func.rem(768)) {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+
+  &__more-info-list-item-btn {
+    padding: 0.5em 1em;
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    color: var(--country-card-text-color);
+    cursor: pointer;
+    transition: v.$main-transition;
+    &:where(:hover, :focus-visible) {
+      opacity: 0.5;
     }
   }
 }

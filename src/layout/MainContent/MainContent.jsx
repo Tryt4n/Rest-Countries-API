@@ -53,7 +53,10 @@ export default function MainContent() {
           )}
         </>
       ) : (
-        <DetailInfo countryData={detailInfo} />
+        <DetailInfo
+          countryData={detailInfo}
+          setDetailInfo={setDetailInfo}
+        />
       )}
     </main>
   );
