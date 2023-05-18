@@ -49,7 +49,6 @@ export default function SelectInput() {
 
   const {
     isOpen,
-    // selectedItem,
     getToggleButtonProps,
     getLabelProps,
     getMenuProps,
@@ -106,13 +105,6 @@ export default function SelectInput() {
                 "aria-selected": selectedRegions.includes(item),
               })}
             >
-              <input
-                type="checkbox"
-                className="select__list-item-input"
-                checked={selectedRegions.includes(item)}
-                value={item.region}
-                onChange={() => null}
-              />
               <span>{item.region}</span>
             </li>
           ))}

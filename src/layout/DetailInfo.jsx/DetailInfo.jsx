@@ -173,9 +173,11 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
               ? "detail-info__more-info-list-container show"
               : "detail-info__more-info-list-container"
           }`}
-          aria-expanded={showMoreInfo ? "true" : "false"}
         >
-          <ul className="detail-info__more-info-list">
+          <ul
+            className="detail-info__more-info-list"
+            aria-expanded={showMoreInfo ? "true" : "false"}
+          >
             <li className="detail-info__more-info-list-item-wrapper">
               <b id="official-name">Official Name:</b>
               <span aria-labelledby="official-name">{countryData.name.official}</span>
@@ -211,7 +213,73 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
               <b id="un-member">UN Member:</b>
               <span aria-labelledby="un-member">{countryData.unMember ? "Yes" : "No"}</span>
             </li>
-            <div className="detail-info__more-info-dialog-wrapper">
+            <li className="detail-info__more-info-dialog-wrapper">
+              <div>
+                <button
+                  className="detail-info__more-info-list-item-btn"
+                  onClick={() => dialogMapRef.current.showModal()}
+                  tabIndex={showMoreInfo ? 0 : -1}
+                >
+                  Click to show on map.
+                </button>
+                <dialog
+                  ref={dialogMapRef}
+                  onClick={(e) => closeModalOnBackdropClick(e, dialogMapRef)}
+                  className="detail-info__dialog-container detail-info__map-container"
+                >
+                  <iframe
+                    className="detail-info__map"
+                    src={`https://maps.google.com/maps?q=${countryData.latlng[0]},${countryData.latlng[1]}&t=&z=5&ie=UTF8&iwloc=&output=embed`}
+                    loading="lazy"
+                    aria-label="Google Map"
+                  ></iframe>
+                  <button
+                    className="detail-info__dialog-close-btn"
+                    aria-labelledby="close-btn-description"
+                    onClick={() => dialogMapRef.current.close()}
+                  >
+                    {closeBtn}
+                  </button>
+                </dialog>
+              </div>
+              {Object.keys(countryData.coatOfArms).length !== 0 && (
+                <div>
+                  <button
+                    className="detail-info__more-info-list-item-btn"
+                    onClick={() => dialogCoatOfArmsRef.current.showModal()}
+                    tabIndex={showMoreInfo ? 0 : -1}
+                  >
+                    Click to show coat of arms.
+                  </button>
+                  <dialog
+                    ref={dialogCoatOfArmsRef}
+                    onClick={(e) => closeModalOnBackdropClick(e, dialogCoatOfArmsRef)}
+                    className="detail-info__dialog-container detail-info__coat-of-arms-container"
+                  >
+                    <img
+                      src={countryData.coatOfArms.png}
+                      alt={`${countryData.name.common} Coat of Arms`}
+                      loading="lazy"
+                      className="detail-info__coat-of-arms"
+                    />
+                    <button
+                      className="detail-info__dialog-close-btn"
+                      aria-labelledby="close-btn-description"
+                      onClick={() => dialogCoatOfArmsRef.current.close()}
+                    >
+                      {closeBtn}
+                    </button>
+                  </dialog>
+                </div>
+              )}
+              <span
+                id="close-btn-description"
+                className="visually-hidden"
+              >
+                Close Button
+              </span>
+            </li>
+            {/* <div className="detail-info__more-info-dialog-wrapper">
               <li>
                 <button
                   className="detail-info__more-info-list-item-btn"
@@ -239,41 +307,43 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                   </button>
                 </dialog>
               </li>
-              <li>
-                <button
-                  className="detail-info__more-info-list-item-btn"
-                  onClick={() => dialogCoatOfArmsRef.current.showModal()}
-                  tabIndex={showMoreInfo ? 0 : -1}
-                >
-                  Click to show coat of arms.
-                </button>
-                <dialog
-                  ref={dialogCoatOfArmsRef}
-                  onClick={(e) => closeModalOnBackdropClick(e, dialogCoatOfArmsRef)}
-                  className="detail-info__dialog-container detail-info__coat-of-arms-container"
-                >
-                  <img
-                    src={countryData.coatOfArms.png}
-                    alt={`${countryData.name.common} Coat of Arms`}
-                    loading="lazy"
-                    className="detail-info__coat-of-arms"
-                  />
+              {Object.keys(countryData.coatOfArms).length !== 0 && (
+                <li>
                   <button
-                    className="detail-info__dialog-close-btn"
-                    aria-labelledby="close-btn-description"
-                    onClick={() => dialogCoatOfArmsRef.current.close()}
+                    className="detail-info__more-info-list-item-btn"
+                    onClick={() => dialogCoatOfArmsRef.current.showModal()}
+                    tabIndex={showMoreInfo ? 0 : -1}
                   >
-                    {closeBtn}
+                    Click to show coat of arms.
                   </button>
-                </dialog>
-              </li>
+                  <dialog
+                    ref={dialogCoatOfArmsRef}
+                    onClick={(e) => closeModalOnBackdropClick(e, dialogCoatOfArmsRef)}
+                    className="detail-info__dialog-container detail-info__coat-of-arms-container"
+                  >
+                    <img
+                      src={countryData.coatOfArms.png}
+                      alt={`${countryData.name.common} Coat of Arms`}
+                      loading="lazy"
+                      className="detail-info__coat-of-arms"
+                    />
+                    <button
+                      className="detail-info__dialog-close-btn"
+                      aria-labelledby="close-btn-description"
+                      onClick={() => dialogCoatOfArmsRef.current.close()}
+                    >
+                      {closeBtn}
+                    </button>
+                  </dialog>
+                </li>
+              )}
               <span
                 id="close-btn-description"
                 className="visually-hidden"
               >
                 Close Button
               </span>
-            </div>
+            </div> */}
           </ul>
         </div>
       </section>

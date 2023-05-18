@@ -37,62 +37,60 @@
   }
 
   &__list-item {
+    position: relative;
     @include flex(row, flex-start, center);
-    padding-inline: 1rem;
     padding-block: 0.5rem;
+    padding-right: 1rem;
+    padding-left: 3rem;
     transition: v.$main-transition;
-
-    &[aria-selected="true"] {
-      background-color: var(--select-input-list-item-selected-background);
+    &::before {
+      position: absolute;
+      content: "";
+      left: 0;
+      height: func.rem(16);
+      aspect-ratio: 1;
+      margin-left: 1rem;
+      background-color: var(--select-input-background-input);
+      border-radius: 0.35em;
+      transition: v.$main-transition;
+    }
+    &::after {
+      position: absolute;
+      content: "✓";
+      left: 0;
+      margin-left: 1rem;
+      translate: 0.275em -0.1em;
+      font-weight: bold;
+      font-size: func.rem(12);
+      transition: v.$main-transition;
+      opacity: 0;
     }
     &.highlighted {
       opacity: 0.5;
     }
-  }
-
-  input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-
-    position: relative;
-    margin: 0;
-    margin-right: 1rem;
-    height: func.rem(16);
-    aspect-ratio: 1;
-    background-color: var(--select-input-background-input);
-    border-radius: 0.35em;
-    cursor: inherit;
-    color: inherit;
-    padding: 0.1em;
-    &::after {
-      content: "✓";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-content: center;
-      font-weight: bold;
-      font-size: func.rem(12);
-      color: inherit;
-      transition: v.$main-transition;
-      opacity: 0;
+    &:where(:hover, :focus-visible)::after {
+      opacity: 0.5;
     }
-  }
-
-  input[type="checkbox"]:checked {
-    background-color: var(--select-input-background-input-highlighted);
-    transition: v.$main-transition;
-    &::after {
+    &[aria-selected="true"] {
+      background-color: var(--select-input-list-item-selected-background);
       opacity: 1;
+      &::before {
+        background-color: var(--select-input-background-input-highlighted);
+      }
+      &::after {
+        opacity: 1;
+      }
     }
-  }
-
-  .highlighted input[type="checkbox"]::after {
-    opacity: 0.5;
   }
 
   .arrow-svg {
     height: func.rem(10);
     aspect-ratio: 1;
     font-weight: 800;
+    transition: v.$main-transition;
   }
+}
+
+.select__text[aria-expanded="true"] .arrow-svg {
+  rotate: -180deg;
 }
