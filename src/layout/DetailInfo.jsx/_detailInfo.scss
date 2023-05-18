@@ -116,7 +116,7 @@
   }
 
   &__more-info-btn {
-    @include flex();
+    @include flex(row, center, center);
     gap: 0.5em;
     padding: 0.5em 1em;
     translate: -1em;
@@ -127,20 +127,16 @@
     color: inherit;
     cursor: pointer;
     transition: v.$main-transition;
-    & .arrow-svg {
-      width: func.rem(10);
-      aspect-ratio: 1;
-    }
     &:where(:hover, :focus-visible) {
       opacity: 0.5;
     }
   }
 
   &__more-info-list-container {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: grid;
     grid-template-rows: 0fr;
-    transition: v.$main-transition;
+    transition: 500ms ease-in-out;
     & > * {
       overflow: hidden;
     }
@@ -254,5 +250,9 @@
     &:where(:hover, :focus-visible) {
       opacity: 0.5;
     }
+  }
+
+  &__advanced-settings-btn {
+    background: transparent;
   }
 }

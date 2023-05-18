@@ -3,7 +3,6 @@ import DataContext from "../../context/DataContext";
 
 const arrowSVG = (
   <svg
-    className="arrow-svg"
     fill="currentColor"
     viewBox="0 0 330 330"
   >
@@ -164,10 +163,9 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
           onClick={() => setShowMoreInfo(!showMoreInfo)}
         >
           <span>More Info</span>
-          {arrowSVG}
+          <span className={`${showMoreInfo ? "arrow-svg rotate" : "arrow-svg"}`}>{arrowSVG}</span>
         </button>
         <div
-          id="more-info-container"
           className={`${
             showMoreInfo
               ? "detail-info__more-info-list-container show"
@@ -175,6 +173,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
           }`}
         >
           <ul
+            id="more-info-container"
             className="detail-info__more-info-list"
             aria-expanded={showMoreInfo ? "true" : "false"}
           >
@@ -279,71 +278,6 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                 Close Button
               </span>
             </li>
-            {/* <div className="detail-info__more-info-dialog-wrapper">
-              <li>
-                <button
-                  className="detail-info__more-info-list-item-btn"
-                  onClick={() => dialogMapRef.current.showModal()}
-                  tabIndex={showMoreInfo ? 0 : -1}
-                >
-                  Click to show on map.
-                </button>
-                <dialog
-                  ref={dialogMapRef}
-                  onClick={(e) => closeModalOnBackdropClick(e, dialogMapRef)}
-                  className="detail-info__dialog-container detail-info__map-container"
-                >
-                  <iframe
-                    src={`https://maps.google.com/maps?q=${countryData.latlng[0]},${countryData.latlng[1]}&t=&z=5&ie=UTF8&iwloc=&output=embed`}
-                    className="detail-info__map"
-                    loading="lazy"
-                  ></iframe>
-                  <button
-                    className="detail-info__dialog-close-btn"
-                    aria-labelledby="close-btn-description"
-                    onClick={() => dialogMapRef.current.close()}
-                  >
-                    {closeBtn}
-                  </button>
-                </dialog>
-              </li>
-              {Object.keys(countryData.coatOfArms).length !== 0 && (
-                <li>
-                  <button
-                    className="detail-info__more-info-list-item-btn"
-                    onClick={() => dialogCoatOfArmsRef.current.showModal()}
-                    tabIndex={showMoreInfo ? 0 : -1}
-                  >
-                    Click to show coat of arms.
-                  </button>
-                  <dialog
-                    ref={dialogCoatOfArmsRef}
-                    onClick={(e) => closeModalOnBackdropClick(e, dialogCoatOfArmsRef)}
-                    className="detail-info__dialog-container detail-info__coat-of-arms-container"
-                  >
-                    <img
-                      src={countryData.coatOfArms.png}
-                      alt={`${countryData.name.common} Coat of Arms`}
-                      loading="lazy"
-                      className="detail-info__coat-of-arms"
-                    />
-                    <button
-                      className="detail-info__dialog-close-btn"
-                      aria-labelledby="close-btn-description"
-                      onClick={() => dialogCoatOfArmsRef.current.close()}
-                    >
-                      {closeBtn}
-                    </button>
-                  </dialog>
-                </li>
-              )}
-              <span
-                id="close-btn-description"
-                className="visually-hidden"
-              >
-                Close Button
-              </span>
-            </div> */}
           </ul>
         </div>
       </section>
