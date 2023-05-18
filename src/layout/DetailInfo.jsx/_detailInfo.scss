@@ -203,4 +203,56 @@
       opacity: 0.5;
     }
   }
+
+  &__dialog-container {
+    border: none;
+    border-radius: v.$block-border-radius;
+    box-shadow: v.$box-shadow;
+  }
+
+  &__map-container {
+    height: 80dvh;
+    width: 80dvw;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  &__map {
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
+
+  &__coat-of-arms-container {
+    max-height: 80dvh;
+    max-width: 80dvw;
+    padding: 1rem;
+  }
+
+  &__coat-of-arms {
+    max-height: 70dvh;
+    max-width: 70dvw;
+  }
+
+  &__dialog-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: v.$main-transition;
+    @media (width <= func.rem(768)) {
+      padding: 0;
+    }
+    & .close-btn {
+      width: 1.5rem;
+      aspect-ratio: 1;
+      color: var(--dark-blue);
+    }
+    &:where(:hover, :focus-visible) {
+      opacity: 0.5;
+    }
+  }
 }

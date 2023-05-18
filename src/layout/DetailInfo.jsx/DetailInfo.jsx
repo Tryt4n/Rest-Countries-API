@@ -5,9 +5,6 @@ const arrowSVG = (
   <svg
     className="arrow-svg"
     fill="currentColor"
-    version="1.1"
-    id="Layer_1"
-    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 330 330"
   >
     <path
@@ -18,18 +15,23 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
   </svg>
 );
 
+const closeBtn = (
+  <svg
+    className="close-btn"
+    viewBox="0 0 512 512"
+    fill="currentColor"
+  >
+    <path d="M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4  L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1  c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1  c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z" />
+  </svg>
+);
+
 export default function DetailInfo({ countryData, setDetailInfo }) {
   const { data } = useContext(DataContext);
 
   const [showMoreInfo, setShowMoreInfo] = useState(false);
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const [isCoatOfArmsOpen, setIsCoatOfArmsOpen] = useState(false);
 
   const dialogMapRef = useRef(null);
   const dialogCoatOfArmsRef = useRef(null);
-
-  const googleMapLink = countryData.maps.googleMaps;
-  console.log(googleMapLink);
 
   function getCountryName(cca3) {
     const countryName = data.find((country) => country.cca3 === cca3);
@@ -39,16 +41,6 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
   function goToBorderCountry(cca3) {
     const countryName = data.find((country) => country.cca3 === cca3);
     setDetailInfo(countryName);
-  }
-
-  function openMap() {
-    setIsMapOpen(true);
-    dialogMapRef.current.showModal();
-  }
-
-  function openCoatOfArms() {
-    setIsCoatOfArmsOpen(true);
-    dialogCoatOfArmsRef.current.showModal();
   }
 
   function closeModalOnBackdropClick(e, ref) {
@@ -65,14 +57,15 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
 
   return (
     <article className="detail-info">
+      <h2 className="visually-hidden">Details Info of {countryData.name.official}</h2>
       <img
         src={countryData.flags.svg}
         alt={`${countryData.name.official} flag`}
         aria-label={countryData.flags.alt ? countryData.flags.alt : undefined}
         className="detail-info__img"
       />
-      <div className="detail-info__data-container">
-        <h2 className="detail-info__header">{countryData.name.common}</h2>
+      <section className="detail-info__data-container">
+        <h3 className="detail-info__header">{countryData.name.common}</h3>
         <ul className="detail-info__list-container">
           <li className="detail-info__list-item-wrapper">
             <b>Native Name:</b>
@@ -161,93 +154,129 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             </div>
           </nav>
         )}
-      </div>
+      </section>
 
-      <div className="detail-info__more-info-container">
+      <section className="detail-info__more-info-container">
+        <h3 className="visually-hidden">More Info of {countryData.name.official}</h3>
         <button
           className="detail-info__more-info-btn"
+          aria-controls="more-info-container"
           onClick={() => setShowMoreInfo(!showMoreInfo)}
         >
           <span>More Info</span>
           {arrowSVG}
         </button>
         <div
+          id="more-info-container"
           className={`${
             showMoreInfo
               ? "detail-info__more-info-list-container show"
               : "detail-info__more-info-list-container"
           }`}
+          aria-expanded={showMoreInfo ? "true" : "false"}
         >
           <ul className="detail-info__more-info-list">
             <li className="detail-info__more-info-list-item-wrapper">
-              <b>Official Name:</b>
-              <span>{countryData.name.official}</span>
+              <b id="official-name">Official Name:</b>
+              <span aria-labelledby="official-name">{countryData.name.official}</span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b>Traffic:</b>
-              <span>{countryData.car.side}-hand</span>
+              <b id="traffic">Traffic:</b>
+              <span aria-labelledby="traffic">{countryData.car.side}-hand Traffic</span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b>Is country independent:</b>
-              <span>{countryData.independent === true ? "Yes" : "No"}</span>
+              <b id="independent">Is country independent:</b>
+              <span aria-labelledby="independent">
+                {countryData.independent === true ? "Yes" : "No"}
+              </span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b>Is country landlocked:</b>
-              <span>{countryData.landlocked === true ? "Yes" : "No"}</span>
+              <b id="landlocked">Is country landlocked:</b>
+              <span aria-labelledby="landlocked">
+                {countryData.landlocked === true ? "Yes" : "No"}
+              </span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b>Timezones:</b>
-              <span>
+              <b id="timezones">Timezones:</b>
+              <div aria-labelledby="timezones">
                 {countryData.timezones.map((timezone, index) => (
                   <React.Fragment key={timezone}>
                     {index > 0 && ", "}
                     <span>{timezone}</span>
                   </React.Fragment>
                 ))}
-              </span>
+              </div>
+            </li>
+            <li className="detail-info__more-info-list-item-wrapper">
+              <b id="un-member">UN Member:</b>
+              <span aria-labelledby="un-member">{countryData.unMember ? "Yes" : "No"}</span>
             </li>
             <div className="detail-info__more-info-dialog-wrapper">
               <li>
                 <button
                   className="detail-info__more-info-list-item-btn"
-                  onClick={openMap}
+                  onClick={() => dialogMapRef.current.showModal()}
+                  tabIndex={showMoreInfo ? 0 : -1}
                 >
                   Click to show on map.
                 </button>
                 <dialog
                   ref={dialogMapRef}
                   onClick={(e) => closeModalOnBackdropClick(e, dialogMapRef)}
+                  className="detail-info__dialog-container detail-info__map-container"
                 >
                   <iframe
-                    // src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1538198.542433701!2d20.0260748!3d41.149935049999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13453bf3bd274c2d%3A0x77ce589d6983bee!2sAlbania!5e0!3m2!1spl!2spl!4v1684350558439!5m2!1spl!2spl"
-                    width="600"
-                    height="450"
+                    src={`https://maps.google.com/maps?q=${countryData.latlng[0]},${countryData.latlng[1]}&t=&z=5&ie=UTF8&iwloc=&output=embed`}
+                    className="detail-info__map"
                     loading="lazy"
                   ></iframe>
+                  <button
+                    className="detail-info__dialog-close-btn"
+                    aria-labelledby="close-btn-description"
+                    onClick={() => dialogMapRef.current.close()}
+                  >
+                    {closeBtn}
+                  </button>
                 </dialog>
               </li>
               <li>
                 <button
                   className="detail-info__more-info-list-item-btn"
-                  onClick={openCoatOfArms}
+                  onClick={() => dialogCoatOfArmsRef.current.showModal()}
+                  tabIndex={showMoreInfo ? 0 : -1}
                 >
                   Click to show coat of arms.
                 </button>
                 <dialog
                   ref={dialogCoatOfArmsRef}
                   onClick={(e) => closeModalOnBackdropClick(e, dialogCoatOfArmsRef)}
+                  className="detail-info__dialog-container detail-info__coat-of-arms-container"
                 >
                   <img
-                    src={countryData.coatOfArms.svg}
+                    src={countryData.coatOfArms.png}
                     alt={`${countryData.name.common} Coat of Arms`}
                     loading="lazy"
+                    className="detail-info__coat-of-arms"
                   />
+                  <button
+                    className="detail-info__dialog-close-btn"
+                    aria-labelledby="close-btn-description"
+                    onClick={() => dialogCoatOfArmsRef.current.close()}
+                  >
+                    {closeBtn}
+                  </button>
                 </dialog>
               </li>
+              <span
+                id="close-btn-description"
+                className="visually-hidden"
+              >
+                Close Button
+              </span>
             </div>
           </ul>
         </div>
-      </div>
+      </section>
     </article>
   );
 }
