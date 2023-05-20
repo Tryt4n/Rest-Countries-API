@@ -3,6 +3,20 @@ import axios from "axios";
 
 const DataContext = createContext();
 
+const arrowSVG = (
+  <svg
+    className="arrow-svg"
+    fill="currentColor"
+    viewBox="0 0 330 330"
+  >
+    <path
+      d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"
+    />
+  </svg>
+);
+
 export function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -11,6 +25,8 @@ export function DataProvider({ children }) {
   const [filteredData, setFilteredData] = useState(data);
   const [selectedRegions, setSelectedRegions] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const [alphabeticalSearching, setAlphabeticalSearching] = useState(true);
 
   const API_URL = `https://restcountries.com/v3.1/all`;
   const controller = new AbortController();
@@ -23,15 +39,7 @@ export function DataProvider({ children }) {
       .get(API_URL, { signal: controller.signal })
       .then((res) => {
         const data = res.data;
-        const alphabeticalData = data.sort((a, b) => {
-          if (a.name.common < b.name.common) {
-            return -1;
-          } else if (a.name.common > b.name.common) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
+        const alphabeticalData = setAlphabetically(data);
         setData(alphabeticalData);
       })
       .catch((error) => {
@@ -85,16 +93,31 @@ export function DataProvider({ children }) {
     setFilteredData(filtered);
   }
 
+  //* Countries order
+  function setAlphabetically(data) {
+    const alphabeticalData = [...data].sort((a, b) => {
+      if (alphabeticalSearching === true) {
+        return a.name.common.localeCompare(b.name.common);
+      } else if (alphabeticalSearching === false) {
+        return b.name.common.localeCompare(a.name.common);
+      }
+      return 0;
+    });
+
+    return alphabeticalData;
+  }
+
   //* Display filtered regions
   useEffect(() => {
     const filtered = filterRegions();
-    setFilteredData(filtered);
-    if (searchText !== "" && filtered.length === 0) {
+    const alphabeticalData = setAlphabetically(filtered);
+    setFilteredData(alphabeticalData);
+    if (searchText !== "" && alphabeticalData.length === 0) {
       setNothingFound(true);
     } else {
       setNothingFound(false);
     }
-  }, [selectedRegions, data, searchText, nothingFound]);
+  }, [selectedRegions, data, searchText, alphabeticalSearching, nothingFound]);
 
   return (
     <DataContext.Provider
@@ -109,7 +132,10 @@ export function DataProvider({ children }) {
         setSelectedRegions: setSelectedRegions,
         searchText: searchText,
         setSearchText: setSearchText,
+        alphabeticalSearching: alphabeticalSearching,
+        setAlphabeticalSearching: setAlphabeticalSearching,
         handleSearchChange: handleSearchChange,
+        arrowSVG: arrowSVG,
       }}
     >
       {children}
