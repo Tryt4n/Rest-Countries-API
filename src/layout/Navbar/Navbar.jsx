@@ -6,12 +6,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import SelectInput from "../../components/SelectInput/SelectInput";
 
 export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
-  const { arrowSVG, alphabeticalSearching, setAlphabeticalSearching } = useContext(DataContext);
+  const { arrowSVG, advancedSearching } = useContext(DataContext);
 
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
-
-  // const [populationSearching, setPopulationSearching] = useState(null)
-  // const [alphabeticalSearching, setAlphabeticalSearching] = useState(true)
 
   return (
     <nav className="navigation-bar">
@@ -50,52 +47,110 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                 aria-expanded={advancedSettingsOpen}
               >
                 <fieldset>
-                  <legend>Sort by population:</legend>
+                  <legend>Sorting options:</legend>
                   <input
                     type="radio"
-                    name="population"
-                    id="none"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    defaultChecked
-                  />
-                  <label htmlFor="none">none</label>
-                  <input
-                    type="radio"
-                    id="ascending"
-                    name="population"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    // value="growing"
-                  />
-                  <label htmlFor="ascending">ascending</label>
-                  <input
-                    type="radio"
-                    id="descending"
-                    name="population"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    // value="declining"
-                  />
-                  <label htmlFor="descending">descending</label>
-                </fieldset>
-
-                <fieldset>
-                  <legend>Sort alphabetically:</legend>
-                  <input
-                    type="radio"
-                    name="alphabetically"
+                    name="sorting"
                     id="a-z"
                     tabIndex={advancedSettingsOpen ? 0 : -1}
-                    defaultChecked={alphabeticalSearching}
-                    onChange={() => setAlphabeticalSearching(true)}
+                    checked={
+                      !advancedSearching.populationSearching
+                        ? advancedSearching.alphabeticalSearching
+                        : false
+                    }
+                    onChange={() => {
+                      advancedSearching.setAlphabeticalSearching(true);
+                      advancedSearching.setPopulationSearching(false);
+                    }}
                   />
                   <label htmlFor="a-z">A-Z</label>
                   <input
                     type="radio"
-                    name="alphabetically"
+                    name="sorting"
                     id="z-a"
                     tabIndex={advancedSettingsOpen ? 0 : -1}
-                    onChange={() => setAlphabeticalSearching(false)}
+                    checked={
+                      !advancedSearching.populationSearching
+                        ? !advancedSearching.alphabeticalSearching
+                        : false
+                    }
+                    onChange={() => {
+                      advancedSearching.setAlphabeticalSearching(false);
+                      advancedSearching.setPopulationSearching(false);
+                    }}
                   />
                   <label htmlFor="z-a">Z-A</label>
+
+                  <input
+                    type="radio"
+                    name="sorting"
+                    id="ascending"
+                    tabIndex={advancedSettingsOpen ? 0 : -1}
+                    checked={
+                      advancedSearching.populationSearching
+                        ? advancedSearching.populationAscending
+                        : false
+                    }
+                    onChange={() => {
+                      advancedSearching.setPopulationAscending(true);
+                      advancedSearching.setPopulationSearching(true);
+                    }}
+                  />
+                  <label htmlFor="ascending">Population ascending</label>
+                  <input
+                    type="radio"
+                    name="sorting"
+                    id="descending"
+                    tabIndex={advancedSettingsOpen ? 0 : -1}
+                    checked={
+                      advancedSearching.populationSearching
+                        ? !advancedSearching.populationAscending
+                        : false
+                    }
+                    onChange={() => {
+                      advancedSearching.setPopulationAscending(false);
+                      advancedSearching.setPopulationSearching(true);
+                    }}
+                  />
+                  <label htmlFor="descending">Population descending</label>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Landlocked:</legend>
+                  <input
+                    type="radio"
+                    name="landlocked"
+                    id="landlocked-all"
+                    tabIndex={advancedSettingsOpen ? 0 : -1}
+                    checked={
+                      advancedSearching.landlocked !== true &&
+                      advancedSearching.landlocked !== false
+                    }
+                    onChange={() => advancedSearching.setLandlocked(null)}
+                  />
+                  <label htmlFor="landlocked-all">Show all countries</label>
+                  <input
+                    type="radio"
+                    name="landlocked"
+                    id="landlocked-yes"
+                    tabIndex={advancedSettingsOpen ? 0 : -1}
+                    checked={
+                      advancedSearching.landlocked === true ? advancedSearching.landlocked : false
+                    }
+                    onChange={() => advancedSearching.setLandlocked(true)}
+                  />
+                  <label htmlFor="landlocked-yes">Yes</label>
+                  <input
+                    type="radio"
+                    name="landlocked"
+                    id="landlocked-no"
+                    tabIndex={advancedSettingsOpen ? 0 : -1}
+                    checked={
+                      advancedSearching.landlocked === false ? !advancedSearching.landlocked : false
+                    }
+                    onChange={() => advancedSearching.setLandlocked(false)}
+                  />
+                  <label htmlFor="landlocked-no">No</label>
                 </fieldset>
               </div>
             </div>

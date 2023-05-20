@@ -26,7 +26,21 @@ export function DataProvider({ children }) {
   const [selectedRegions, setSelectedRegions] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  //* Advanced Searching
   const [alphabeticalSearching, setAlphabeticalSearching] = useState(true);
+  const [populationSearching, setPopulationSearching] = useState(false);
+  const [populationAscending, setPopulationAscending] = useState(undefined);
+  const [landlocked, setLandlocked] = useState(null);
+  const advancedSearching = {
+    alphabeticalSearching,
+    setAlphabeticalSearching,
+    populationSearching,
+    setPopulationSearching,
+    populationAscending,
+    setPopulationAscending,
+    landlocked,
+    setLandlocked,
+  };
 
   const API_URL = `https://restcountries.com/v3.1/all`;
   const controller = new AbortController();
@@ -39,7 +53,7 @@ export function DataProvider({ children }) {
       .get(API_URL, { signal: controller.signal })
       .then((res) => {
         const data = res.data;
-        const alphabeticalData = setAlphabetically(data);
+        const alphabeticalData = sortAlphabetically(data);
         setData(alphabeticalData);
       })
       .catch((error) => {
@@ -93,13 +107,16 @@ export function DataProvider({ children }) {
     setFilteredData(filtered);
   }
 
-  //* Countries order
-  function setAlphabetically(data) {
+  //* Countries alphabetically order
+  function sortAlphabetically(data) {
     const alphabeticalData = [...data].sort((a, b) => {
+      const alphabeticalA = a.name.common;
+      const alphabeticalB = b.name.common;
+
       if (alphabeticalSearching === true) {
-        return a.name.common.localeCompare(b.name.common);
+        return alphabeticalA.localeCompare(alphabeticalB);
       } else if (alphabeticalSearching === false) {
-        return b.name.common.localeCompare(a.name.common);
+        return alphabeticalB.localeCompare(alphabeticalA);
       }
       return 0;
     });
@@ -107,17 +124,52 @@ export function DataProvider({ children }) {
     return alphabeticalData;
   }
 
+  //* Countries sort by population
+  function sortByPopulation(data) {
+    if (populationSearching && populationAscending !== null) {
+      const sortedData = [...data].sort((a, b) => {
+        const populationA = a.population;
+        const populationB = b.population;
+
+        if (populationAscending) {
+          return populationA - populationB;
+        } else {
+          return populationB - populationA;
+        }
+      });
+
+      return sortedData;
+    } else {
+      return data;
+    }
+  }
+
   //* Display filtered regions
   useEffect(() => {
     const filtered = filterRegions();
-    const alphabeticalData = setAlphabetically(filtered);
-    setFilteredData(alphabeticalData);
-    if (searchText !== "" && alphabeticalData.length === 0) {
+    const alphabeticalData = sortAlphabetically(filtered);
+    // setFilteredData(alphabeticalData);
+    const populationData = sortByPopulation(filtered);
+    if (!populationSearching) {
+      setFilteredData(alphabeticalData);
+    } else {
+      setFilteredData(populationData);
+    }
+
+    if ((searchText !== "" && alphabeticalData.length === 0) || populationData.length === 0) {
       setNothingFound(true);
     } else {
       setNothingFound(false);
     }
-  }, [selectedRegions, data, searchText, alphabeticalSearching, nothingFound]);
+  }, [
+    selectedRegions,
+    data,
+    searchText,
+    alphabeticalSearching,
+    populationSearching,
+    populationAscending,
+    nothingFound,
+  ]);
 
   return (
     <DataContext.Provider
@@ -132,8 +184,7 @@ export function DataProvider({ children }) {
         setSelectedRegions: setSelectedRegions,
         searchText: searchText,
         setSearchText: setSearchText,
-        alphabeticalSearching: alphabeticalSearching,
-        setAlphabeticalSearching: setAlphabeticalSearching,
+        advancedSearching: advancedSearching,
         handleSearchChange: handleSearchChange,
         arrowSVG: arrowSVG,
       }}
