@@ -30,7 +30,10 @@ export function DataProvider({ children }) {
   const [alphabeticalSearching, setAlphabeticalSearching] = useState(true);
   const [populationSearching, setPopulationSearching] = useState(false);
   const [populationAscending, setPopulationAscending] = useState(undefined);
+  const [independent, setIndependent] = useState(null);
   const [landlocked, setLandlocked] = useState(null);
+  const [unitedNationsMember, setUnitedNationsMember] = useState(null);
+  const [traffic, setTraffic] = useState(null);
   const advancedSearching = {
     alphabeticalSearching,
     setAlphabeticalSearching,
@@ -38,8 +41,14 @@ export function DataProvider({ children }) {
     setPopulationSearching,
     populationAscending,
     setPopulationAscending,
+    independent,
+    setIndependent,
     landlocked,
     setLandlocked,
+    unitedNationsMember,
+    setUnitedNationsMember,
+    traffic,
+    setTraffic,
   };
 
   const API_URL = `https://restcountries.com/v3.1/all`;
@@ -53,8 +62,7 @@ export function DataProvider({ children }) {
       .get(API_URL, { signal: controller.signal })
       .then((res) => {
         const data = res.data;
-        const alphabeticalData = sortAlphabetically(data);
-        setData(alphabeticalData);
+        setData(data);
       })
       .catch((error) => {
         if (axios.isCancel(error)) {
@@ -107,7 +115,7 @@ export function DataProvider({ children }) {
     setFilteredData(filtered);
   }
 
-  //* Countries alphabetically order
+  // //* Countries alphabetically order
   function sortAlphabetically(data) {
     const alphabeticalData = [...data].sort((a, b) => {
       const alphabeticalA = a.name.common;
@@ -144,23 +152,78 @@ export function DataProvider({ children }) {
     }
   }
 
+  //* Independent search
+  function handleIndependentSearch(data) {
+    if (independent) {
+      const independentCountries = data.filter((country) => country.independent === true);
+      return independentCountries;
+    } else if (independent === false) {
+      const nonIndependentCountries = data.filter((country) => country.independent === false);
+      return nonIndependentCountries;
+    } else {
+      return data;
+    }
+  }
+
+  //* Landlocked search
+  function handleLandlockedSearch(data) {
+    if (landlocked) {
+      const landlockedCountries = data.filter((country) => country.landlocked === true);
+      return landlockedCountries;
+    } else if (landlocked === false) {
+      const nonlandlockedCountries = data.filter((country) => country.landlocked === false);
+      return nonlandlockedCountries;
+    } else {
+      return data;
+    }
+  }
+
+  //* United Nations search
+  function handleUNSearch(data) {
+    if (unitedNationsMember) {
+      const unitedNationsCountries = data.filter((country) => country.unMember === true);
+      return unitedNationsCountries;
+    } else if (unitedNationsMember === false) {
+      const nonUnitedNationsCountries = data.filter((country) => country.unMember === false);
+      return nonUnitedNationsCountries;
+    } else {
+      return data;
+    }
+  }
+
+  //* Traffic search
+  function handleTrafficSearch(data) {
+    if (traffic) {
+      const leftHandTrafficCountries = data.filter((country) => country.car.side === "left");
+      return leftHandTrafficCountries;
+    } else if (traffic === false) {
+      const rightHandTrafficCountries = data.filter((country) => country.car.side === "right");
+      return rightHandTrafficCountries;
+    } else {
+      return data;
+    }
+  }
+
   //* Display filtered regions
   useEffect(() => {
     const filtered = filterRegions();
-    const alphabeticalData = sortAlphabetically(filtered);
-    // setFilteredData(alphabeticalData);
-    const populationData = sortByPopulation(filtered);
-    if (!populationSearching) {
-      setFilteredData(alphabeticalData);
-    } else {
-      setFilteredData(populationData);
-    }
+    const sortedData = populationSearching
+      ? sortByPopulation(filtered)
+      : sortAlphabetically(filtered);
+    const independentData = handleIndependentSearch(sortedData);
+    const landlockedData = handleLandlockedSearch(independentData);
+    const UNData = handleUNSearch(landlockedData);
+    const trafficData = handleTrafficSearch(UNData);
 
-    if ((searchText !== "" && alphabeticalData.length === 0) || populationData.length === 0) {
-      setNothingFound(true);
-    } else {
-      setNothingFound(false);
-    }
+    setFilteredData(trafficData);
+    setNothingFound(
+      (searchText !== "" && landlockedData.length === 0) ||
+        sortedData.length === 0 ||
+        independentData.length === 0 ||
+        landlockedData.length === 0 ||
+        UNData.length === 0 ||
+        trafficData.length === 0
+    );
   }, [
     selectedRegions,
     data,
@@ -168,6 +231,10 @@ export function DataProvider({ children }) {
     alphabeticalSearching,
     populationSearching,
     populationAscending,
+    independent,
+    landlocked,
+    unitedNationsMember,
+    traffic,
     nothingFound,
   ]);
 

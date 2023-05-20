@@ -88,11 +88,15 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>Top Level Domain:</b>
-            <div>
-              {countryData.tld.map((tld) => {
-                return <span key={tld}>{tld}</span>;
-              })}
-            </div>
+            {countryData.tld ? (
+              <div>
+                {countryData.tld.map((tld) => {
+                  return <span key={tld}>{tld}</span>;
+                })}
+              </div>
+            ) : (
+              "none"
+            )}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>Currencies:</b>
