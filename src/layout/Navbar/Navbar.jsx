@@ -26,6 +26,12 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
               className="navigation-bar__advanced-settings-btn"
               type="button"
               aria-controls="advanced-settings-list"
+              aria-label="Click to expand additional search options."
+              title={`${
+                advancedSettingsOpen
+                  ? "Click to hide additional search options."
+                  : "Click to expand additional search options."
+              }`}
               onClick={() => setAdvancedSettingsOpen(!advancedSettingsOpen)}
             >
               <span>Advanced Searching Settings</span>
@@ -45,253 +51,407 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                 className="navigation-bar__advanced-settings-container"
                 role="region"
                 aria-expanded={advancedSettingsOpen}
+                aria-label="Advanced Search Options List."
               >
                 <fieldset>
-                  <legend>Sorting options:</legend>
-                  <input
-                    type="radio"
-                    name="sorting"
-                    id="a-z"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      !advancedSearching.populationSearching
-                        ? advancedSearching.alphabeticalSearching
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setAlphabeticalSearching(true);
-                      advancedSearching.setPopulationSearching(false);
-                    }}
-                  />
-                  <label htmlFor="a-z">A-Z</label>
-                  <input
-                    type="radio"
-                    name="sorting"
-                    id="z-a"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      !advancedSearching.populationSearching
-                        ? !advancedSearching.alphabeticalSearching
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setAlphabeticalSearching(false);
-                      advancedSearching.setPopulationSearching(false);
-                    }}
-                  />
-                  <label htmlFor="z-a">Z-A</label>
-
-                  <input
-                    type="radio"
-                    name="sorting"
-                    id="ascending"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.populationSearching
-                        ? advancedSearching.populationAscending
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setPopulationAscending(true);
-                      advancedSearching.setPopulationSearching(true);
-                    }}
-                  />
-                  <label htmlFor="ascending">Population ascending</label>
-                  <input
-                    type="radio"
-                    name="sorting"
-                    id="descending"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.populationSearching
-                        ? !advancedSearching.populationAscending
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setPopulationAscending(false);
-                      advancedSearching.setPopulationSearching(true);
-                    }}
-                  />
-                  <label htmlFor="descending">Population descending</label>
+                  <legend className="navigation-bar__advanced-settings-legend">
+                    Sorting options:
+                  </legend>
+                  <div className="navigation-bar__advanced-settings-inputs-container">
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="sorting"
+                        id="a-z"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          !advancedSearching.populationSearching
+                            ? advancedSearching.alphabeticalSearching
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setAlphabeticalSearching(true);
+                          advancedSearching.setPopulationSearching(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="a-z"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        A-Z
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="sorting"
+                        id="z-a"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          !advancedSearching.populationSearching
+                            ? !advancedSearching.alphabeticalSearching
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setAlphabeticalSearching(false);
+                          advancedSearching.setPopulationSearching(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="z-a"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Z-A
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="sorting"
+                        id="ascending"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.populationSearching
+                            ? advancedSearching.populationAscending
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setPopulationAscending(true);
+                          advancedSearching.setPopulationSearching(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="ascending"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Population ascending
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="sorting"
+                        id="descending"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.populationSearching
+                            ? !advancedSearching.populationAscending
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setPopulationAscending(false);
+                          advancedSearching.setPopulationSearching(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="descending"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Population descending
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
 
                 <fieldset>
-                  <legend>Independent Options:</legend>
-                  <input
-                    type="radio"
-                    name="independent"
-                    id="independent-all"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.independent !== true &&
-                      advancedSearching.independent !== false
-                    }
-                    onChange={() => {
-                      advancedSearching.setIndependent(null);
-                    }}
-                  />
-                  <label htmlFor="independent-all">Show all countries</label>
-                  <input
-                    type="radio"
-                    name="independent"
-                    id="independent-yes"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.independent === true ? advancedSearching.independent : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setIndependent(true);
-                    }}
-                  />
-                  <label htmlFor="independent-yes">Yes</label>
-                  <input
-                    type="radio"
-                    name="independent"
-                    id="independent-no"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.independent === false
-                        ? !advancedSearching.independent
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setIndependent(false);
-                    }}
-                  />
-                  <label htmlFor="independent-no">No</label>
+                  <legend className="navigation-bar__advanced-settings-legend">
+                    Independent Country:
+                  </legend>
+                  <div className="navigation-bar__advanced-settings-inputs-container">
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="independent"
+                        id="independent-all"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.independent !== true &&
+                          advancedSearching.independent !== false
+                        }
+                        onChange={() => {
+                          advancedSearching.setIndependent(null);
+                        }}
+                      />
+                      <label
+                        htmlFor="independent-all"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Show all countries
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="independent"
+                        id="independent-yes"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.independent === true
+                            ? advancedSearching.independent
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setIndependent(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="independent-yes"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="independent"
+                        id="independent-no"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.independent === false
+                            ? !advancedSearching.independent
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setIndependent(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="independent-no"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
 
                 <fieldset>
-                  <legend>Landlocked Options:</legend>
-                  <input
-                    type="radio"
-                    name="landlocked"
-                    id="landlocked-all"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.landlocked !== true &&
-                      advancedSearching.landlocked !== false
-                    }
-                    onChange={() => {
-                      advancedSearching.setLandlocked(null);
-                    }}
-                  />
-                  <label htmlFor="landlocked-all">Show all countries</label>
-                  <input
-                    type="radio"
-                    name="landlocked"
-                    id="landlocked-yes"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.landlocked === true ? advancedSearching.landlocked : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setLandlocked(true);
-                    }}
-                  />
-                  <label htmlFor="landlocked-yes">Yes</label>
-                  <input
-                    type="radio"
-                    name="landlocked"
-                    id="landlocked-no"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.landlocked === false ? !advancedSearching.landlocked : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setLandlocked(false);
-                    }}
-                  />
-                  <label htmlFor="landlocked-no">No</label>
+                  <legend className="navigation-bar__advanced-settings-legend">
+                    Landlocked Country:
+                  </legend>
+                  <div className="navigation-bar__advanced-settings-inputs-container">
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="landlocked"
+                        id="landlocked-all"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.landlocked !== true &&
+                          advancedSearching.landlocked !== false
+                        }
+                        onChange={() => {
+                          advancedSearching.setLandlocked(null);
+                        }}
+                      />
+                      <label
+                        htmlFor="landlocked-all"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Show all countries
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="landlocked"
+                        id="landlocked-yes"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.landlocked === true
+                            ? advancedSearching.landlocked
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setLandlocked(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="landlocked-yes"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="landlocked"
+                        id="landlocked-no"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.landlocked === false
+                            ? !advancedSearching.landlocked
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setLandlocked(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="landlocked-no"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
 
                 <fieldset>
-                  <legend>United Nations Member:</legend>
-                  <input
-                    type="radio"
-                    name="united-nations"
-                    id="united-nations-all"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.unitedNationsMember !== true &&
-                      advancedSearching.unitedNationsMember !== false
-                    }
-                    onChange={() => {
-                      advancedSearching.setUnitedNationsMember(null);
-                    }}
-                  />
-                  <label htmlFor="united-nations-all">Show all countries</label>
-                  <input
-                    type="radio"
-                    name="united-nations"
-                    id="united-nations-yes"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.unitedNationsMember === true
-                        ? advancedSearching.unitedNationsMember
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setUnitedNationsMember(true);
-                    }}
-                  />
-                  <label htmlFor="united-nations-yes">Yes</label>
-                  <input
-                    type="radio"
-                    name="united-nations"
-                    id="united-nations-no"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.unitedNationsMember === false
-                        ? !advancedSearching.unitedNationsMember
-                        : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setUnitedNationsMember(false);
-                    }}
-                  />
-                  <label htmlFor="united-nations-no">No</label>
+                  <legend className="navigation-bar__advanced-settings-legend">
+                    United Nations Member:
+                  </legend>
+                  <div className="navigation-bar__advanced-settings-inputs-container">
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="united-nations"
+                        id="united-nations-all"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.unitedNationsMember !== true &&
+                          advancedSearching.unitedNationsMember !== false
+                        }
+                        onChange={() => {
+                          advancedSearching.setUnitedNationsMember(null);
+                        }}
+                      />
+                      <label
+                        htmlFor="united-nations-all"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Show all countries
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="united-nations"
+                        id="united-nations-yes"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.unitedNationsMember === true
+                            ? advancedSearching.unitedNationsMember
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setUnitedNationsMember(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="united-nations-yes"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Yes
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="united-nations"
+                        id="united-nations-no"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.unitedNationsMember === false
+                            ? !advancedSearching.unitedNationsMember
+                            : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setUnitedNationsMember(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="united-nations-no"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        No
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
 
                 <fieldset>
-                  <legend>Traffic:</legend>
-                  <input
-                    type="radio"
-                    name="traffic"
-                    id="traffic-all"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.traffic !== true && advancedSearching.traffic !== false
-                    }
-                    onChange={() => {
-                      advancedSearching.setTraffic(null);
-                    }}
-                  />
-                  <label htmlFor="traffic-all">Show all countries</label>
-                  <input
-                    type="radio"
-                    name="traffic"
-                    id="traffic-yes"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={advancedSearching.traffic === true ? advancedSearching.traffic : false}
-                    onChange={() => {
-                      advancedSearching.setTraffic(true);
-                    }}
-                  />
-                  <label htmlFor="traffic-yes">Left-hand</label>
-                  <input
-                    type="radio"
-                    name="traffic"
-                    id="traffic-no"
-                    tabIndex={advancedSettingsOpen ? 0 : -1}
-                    checked={
-                      advancedSearching.traffic === false ? !advancedSearching.traffic : false
-                    }
-                    onChange={() => {
-                      advancedSearching.setTraffic(false);
-                    }}
-                  />
-                  <label htmlFor="traffic-no">Right-hand</label>
+                  <legend className="navigation-bar__advanced-settings-legend">Traffic:</legend>
+                  <div className="navigation-bar__advanced-settings-inputs-container">
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="traffic"
+                        id="traffic-all"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.traffic !== true && advancedSearching.traffic !== false
+                        }
+                        onChange={() => {
+                          advancedSearching.setTraffic(null);
+                        }}
+                      />
+                      <label
+                        htmlFor="traffic-all"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Show all countries
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="traffic"
+                        id="traffic-yes"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.traffic === true ? advancedSearching.traffic : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setTraffic(true);
+                        }}
+                      />
+                      <label
+                        htmlFor="traffic-yes"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Left-hand
+                      </label>
+                    </div>
+                    <div className="navigation-bar__advanced-settings-input-wrapper">
+                      <input
+                        type="radio"
+                        name="traffic"
+                        id="traffic-no"
+                        className="navigation-bar__advanced-settings-input"
+                        tabIndex={advancedSettingsOpen ? 0 : -1}
+                        checked={
+                          advancedSearching.traffic === false ? !advancedSearching.traffic : false
+                        }
+                        onChange={() => {
+                          advancedSearching.setTraffic(false);
+                        }}
+                      />
+                      <label
+                        htmlFor="traffic-no"
+                        className="navigation-bar__advanced-settings-label"
+                      >
+                        Right-hand
+                      </label>
+                    </div>
+                  </div>
                 </fieldset>
               </div>
             </div>

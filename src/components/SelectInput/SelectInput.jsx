@@ -62,18 +62,20 @@ export default function SelectInput() {
   });
 
   return (
-    <div className="select">
-      <label
-        {...getLabelProps()}
-        className="visually-hidden"
-      >
-        Filter by Region
-      </label>
+    <div
+      className="select"
+      title="Click to show filtering options by region."
+    >
       <div
         className="select__text"
         {...getToggleButtonProps()}
       >
-        <span>Filter by Region</span>
+        <label
+          className="select__label"
+          {...getLabelProps()}
+        >
+          Filter by Region
+        </label>
         <span>{arrowSVG}</span>
       </div>
       <ul

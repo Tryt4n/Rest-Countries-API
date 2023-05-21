@@ -23,6 +23,10 @@
     outline: none;
   }
 
+  &__label {
+    cursor: inherit;
+  }
+
   &__list {
     position: absolute;
     width: 100%;

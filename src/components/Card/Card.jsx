@@ -26,7 +26,6 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
       onClick={() => {
         setDetailInfo(data);
         setIsDetailOpen(true);
-        console.log(data);
       }}
     >
       <article className="country-card">
@@ -74,7 +73,9 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
           <div className="country-card__text-line">
             <b className="country-card__text-bolded">Capital:</b>
             &nbsp;
-            <span className="country-card__text-output">{data.capital}</span>
+            <span className="country-card__text-output">
+              {data.capital ? data.capital : "none"}
+            </span>
           </div>
         </div>
       </article>

@@ -28,9 +28,13 @@
   --select-input-background: var(--white);
   --select-input-text-color: var(--very-dark-blue);
   --select-input-outline-color: var(--black);
-  --select-input-list-item-selected-background: hsl(0, 0%, 85%);
-  --select-input-background-input: hsl(0, 0%, 85%);
+  --select-input-list-item-selected-background: var(--darker-white);
+  --select-input-background-input: var(--darker-white);
   --select-input-background-input-highlighted: hsl(0, 0%, 60%);
+
+  // //* Navbar Advanced Searching Settings Input
+  --navigation-bar-advanced-settings-input: var(--darker-white);
+  --navigation-bar-advanced-settings-input-text-color: var(--very-dark-blue);
 
   //* Card
   --country-card-background: var(--white);
@@ -71,6 +75,10 @@
   --select-input-list-item-selected-background: hsl(207, 26%, 30%);
   --select-input-background-input: var(--very-dark-blue-bg);
   --select-input-background-input-highlighted: var(--dark-blue);
+
+  //* Navbar Advanced Searching Settings Input
+  --navigation-bar-advanced-settings-input: var(--dark-blue);
+  --navigation-bar-advanced-settings-input-text-color: var(--white);
 
   //* Card
   --country-card-background: var(--dark-blue);

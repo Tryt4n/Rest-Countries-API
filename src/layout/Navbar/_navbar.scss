@@ -1,47 +1,3 @@
-// @use "../../abstracts/mixins" as *;
-// @use "../../abstracts/variables" as v;
-// @use "../../base/functions" as func;
-
-// .navigation-bar {
-//   margin-block: 2rem;
-
-//   &__form-container {
-//     @include flex(row, space-between);
-//     gap: 3rem;
-
-//     @media (width <= func.rem(768)) {
-//       flex-direction: column;
-//       align-items: flex-start;
-//     }
-//   }
-
-//   &__back-btn {
-//     @include flex(row, center, center);
-//     gap: 0.5em;
-//     background: var(--header-bg);
-//     border: none;
-//     border-radius: v.$block-border-radius;
-//     box-shadow: v.$box-shadow;
-//     padding: 0.25em 1.75em;
-//     font: inherit;
-//     color: var(--header-text);
-//     text-transform: capitalize;
-//     cursor: pointer;
-//     transition: v.$main-transition;
-//     line-height: 2rem;
-//     outline: func.rem(1) solid transparent;
-
-//     &:where(:hover, :focus-visible) {
-//       opacity: 0.5;
-//       outline: func.rem(1) solid var(--searchbar-outline-color);
-//     }
-
-//     &--arrow {
-//       font-size: 1.75em;
-//     }
-//   }
-// }
-
 @use "../../abstracts/mixins" as *;
 @use "../../abstracts/variables" as v;
 @use "../../base/functions" as func;
@@ -98,12 +54,13 @@
   }
   &__advanced-settings-container {
     color: var(--select-input-text-color);
+    transition: v.$main-transition;
   }
 
   &__advanced-settings-btn {
     @include flex(row, center, center);
     gap: 0.5em;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     padding: 0.5em 1em;
     background: transparent;
     border: none;
@@ -116,14 +73,70 @@
       opacity: 0.5;
     }
   }
-}
 
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
+  &__advanced-settings-container {
+    @include flex(row);
+    flex-wrap: wrap;
+    row-gap: 3rem;
+    column-gap: 5rem;
+    margin-top: 1rem;
+  }
 
-legend {
-  padding: 0;
+  &__advanced-settings-legend {
+    font-weight: 600;
+  }
+
+  &__advanced-settings-inputs-container {
+    @include flex();
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    font-size: func.rem(14);
+    margin-left: 1rem;
+  }
+
+  &__advanced-settings-input-wrapper {
+    @include flex(row, flex-start, center);
+    cursor: pointer;
+    transition: v.$main-transition;
+  }
+
+  &__advanced-settings-input {
+    position: relative;
+    appearance: none;
+    width: func.rem(14);
+    aspect-ratio: 1;
+    background-color: var(--navigation-bar-advanced-settings-input);
+    border-radius: 0.35em;
+    cursor: inherit;
+    &::before {
+      position: absolute;
+      content: "✓";
+      font-weight: bold;
+      font-size: func.rem(10);
+      color: var(--navigation-bar-advanced-settings-input-text-color);
+      translate: 0.35em;
+      transition: v.$main-transition;
+      opacity: 0;
+    }
+  }
+
+  &__advanced-settings-label {
+    cursor: inherit;
+    padding-left: 0.5em;
+    transition: v.$main-transition;
+  }
+
+  &__advanced-settings-input-wrapper:where(:hover, :focus-visible)
+    .navigation-bar__advanced-settings-input::before {
+    opacity: 0.5;
+  }
+
+  &__advanced-settings-input-wrapper:where(:hover, :focus-visible)
+    .navigation-bar__advanced-settings-label {
+    opacity: 0.75;
+  }
+
+  &__advanced-settings-input:checked::before {
+    opacity: 1;
+  }
 }
