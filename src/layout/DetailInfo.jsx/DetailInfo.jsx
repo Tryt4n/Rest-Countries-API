@@ -1,8 +1,11 @@
 import React, { useContext, useRef, useState } from "react";
 import DataContext from "../../context/DataContext";
 
+import { useTranslation } from "react-i18next";
+
 const closeBtn = (
   <svg
+    aria-hidden
     className="close-btn"
     viewBox="0 0 512 512"
     fill="currentColor"
@@ -12,6 +15,8 @@ const closeBtn = (
 );
 
 export default function DetailInfo({ countryData, setDetailInfo }) {
+  const { t } = useTranslation();
+
   const { arrowSVG, data } = useContext(DataContext);
 
   const [showMoreInfo, setShowMoreInfo] = useState(false);
@@ -43,7 +48,9 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
 
   return (
     <article className="detail-info">
-      <h2 className="visually-hidden">Details Info of {countryData.name.official}</h2>
+      <h2 className="visually-hidden">
+        {t("DetailInfoOf")} {countryData.name.official}
+      </h2>
       <img
         src={countryData.flags.svg}
         alt={`${countryData.name.official} flag`}
@@ -54,7 +61,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
         <h3 className="detail-info__header">{countryData.name.common}</h3>
         <ul className="detail-info__list-container">
           <li className="detail-info__list-item-wrapper">
-            <b>Native Name:</b>
+            <b>{t("NativeName")}:</b>
             {countryData.name.nativeName == null ? (
               "none"
             ) : (
@@ -62,19 +69,19 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             )}
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Population:</b>
+            <b>{t("Population")}:</b>
             <span>{countryData.population.toLocaleString()}</span>
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Region:</b>
+            <b>{t("Region")}:</b>
             <span>{countryData.region}</span>
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Sub Region:</b>
+            <b>{t("SubRegion")}:</b>
             {!countryData.subregion ? "none" : <span>{countryData.subregion}</span>}
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Capital:</b>
+            <b>{t("Capital")}:</b>
             <div>
               {countryData.capital == null
                 ? "none"
@@ -87,7 +94,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             </div>
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Top Level Domain:</b>
+            <b>{t("TLD")}:</b>
             {countryData.tld ? (
               <div>
                 {countryData.tld.map((tld) => {
@@ -99,7 +106,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             )}
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Currencies:</b>
+            <b>{t("Currencies")}:</b>
             {countryData.currencies == null ? (
               "none"
             ) : (
@@ -109,7 +116,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             )}
           </li>
           <li className="detail-info__list-item-wrapper">
-            <b>Languages:</b>
+            <b>{t("Languages")}:</b>
             <div>
               {countryData.languages == null
                 ? "none"
@@ -129,7 +136,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             className="detail-info__border-countries-navigation"
             aria-label="Border Countries Navigation"
           >
-            <h3 className="detail-info__border-countries-header">Border Countries:</h3>
+            <h3 className="detail-info__border-countries-header">{t("BorderCountries")}:</h3>
             <div className="detail-info__border-countries-buttons-container">
               {countryData.borders.map((borderCountry) => (
                 <React.Fragment key={borderCountry}>
@@ -147,13 +154,17 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
       </section>
 
       <section className="detail-info__more-info-container">
-        <h3 className="visually-hidden">More Info of {countryData.name.official}</h3>
+        <h3 className="visually-hidden">
+          {t("MoreInfoOf")} {countryData.name.official}
+        </h3>
         <button
           className="detail-info__more-info-btn"
           aria-controls="more-info-container"
+          aria-label={t("MoreInfoDescription")}
+          title={t("MoreInfoDescription")}
           onClick={() => setShowMoreInfo(!showMoreInfo)}
         >
-          <span>More Info</span>
+          <span>{t("MoreInfo")}</span>
           <span className={`${showMoreInfo ? "arrow-svg rotate" : "arrow-svg"}`}>{arrowSVG}</span>
         </button>
         <div
@@ -169,27 +180,29 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             aria-expanded={showMoreInfo ? "true" : "false"}
           >
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="official-name">Official Name:</b>
+              <b id="official-name">{t("OfficialName")}:</b>
               <span aria-labelledby="official-name">{countryData.name.official}</span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="traffic">Traffic:</b>
-              <span aria-labelledby="traffic">{countryData.car.side}-hand Traffic</span>
+              <b id="traffic">{t("Traffic")}:</b>
+              <span aria-labelledby="traffic">
+                {countryData.car.side === "right" ? t("RightHandTraffic") : t("LeftHandTraffic")}
+              </span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="independent">Is country independent:</b>
+              <b id="independent">{t("IsCountryIndependent")}:</b>
               <span aria-labelledby="independent">
-                {countryData.independent === true ? "Yes" : "No"}
+                {countryData.independent === true ? t("Yes") : t("No")}
               </span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="landlocked">Is country landlocked:</b>
+              <b id="landlocked">{t("IsCountryLandlocked")}:</b>
               <span aria-labelledby="landlocked">
-                {countryData.landlocked === true ? "Yes" : "No"}
+                {countryData.landlocked === true ? t("Yes") : t("No")}
               </span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="timezones">Timezones:</b>
+              <b id="timezones">{t("Timezones")}:</b>
               <div aria-labelledby="timezones">
                 {countryData.timezones.map((timezone, index) => (
                   <React.Fragment key={timezone}>
@@ -200,8 +213,8 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
               </div>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="un-member">UN Member:</b>
-              <span aria-labelledby="un-member">{countryData.unMember ? "Yes" : "No"}</span>
+              <b id="un-member">{t("UNMember")}:</b>
+              <span aria-labelledby="un-member">{countryData.unMember ? t("Yes") : t("No")}</span>
             </li>
             <li className="detail-info__more-info-dialog-wrapper">
               <div>
@@ -210,7 +223,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                   onClick={() => dialogMapRef.current.showModal()}
                   tabIndex={showMoreInfo ? 0 : -1}
                 >
-                  Click to show on map.
+                  {t("ClickToShowOnMap")}
                 </button>
                 <dialog
                   ref={dialogMapRef}
@@ -221,7 +234,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                     className="detail-info__map"
                     src={`https://maps.google.com/maps?q=${countryData.latlng[0]},${countryData.latlng[1]}&t=&z=5&ie=UTF8&iwloc=&output=embed`}
                     loading="lazy"
-                    aria-label="Google Map"
+                    aria-label={t("GoogleMap")}
                   ></iframe>
                   <button
                     className="detail-info__dialog-close-btn"
@@ -239,7 +252,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                     onClick={() => dialogCoatOfArmsRef.current.showModal()}
                     tabIndex={showMoreInfo ? 0 : -1}
                   >
-                    Click to show coat of arms.
+                    {t("ClickToShowCoatOfArms")}
                   </button>
                   <dialog
                     ref={dialogCoatOfArmsRef}
@@ -248,7 +261,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                   >
                     <img
                       src={countryData.coatOfArms.png}
-                      alt={`${countryData.name.common} Coat of Arms`}
+                      alt={`${countryData.name.common} ${t("CoatOfArms")}`}
                       loading="lazy"
                       className="detail-info__coat-of-arms"
                     />
@@ -266,7 +279,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                 id="close-btn-description"
                 className="visually-hidden"
               >
-                Close Button
+                {t("CloseButton")}
               </span>
             </li>
           </ul>

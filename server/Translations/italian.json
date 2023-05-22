@@ -1,0 +1,50 @@
+{
+  "mainHeader": "Where in the world?",
+
+  "lightMode": "Light Mode",
+  "darkMode": "Dark Mode",
+  "darkModeLabel": "Theme Switch",
+  "darkModeSwitchTitle": "Click to change theme.",
+  "iconMoonAlt": "Dark Mode Theme Icon",
+  "iconSunAlt": "Light Mode Theme Icon",
+
+  "navigationBarHeader": "Main Navigation bar",
+  "navigationBarBasicSearchingHeader": "Basic Searching",
+  "navigationBarBackButton": "back",
+
+  "searchbarLabel": "searchbar",
+  "searchbarPlaceholder": "Search for a country...",
+  "searchbarWarningText": "Not allowed characters",
+
+  "SelectTitle": "Click to show filtering options by region.",
+  "SelectLabel": "Filter by Region",
+  "SelectRegionAfrica": "Africa",
+  "SelectRegionAmericas": "Americas",
+  "SelectRegionAsia": "Asia",
+  "SelectRegionEurope": "Europe",
+  "SelectRegionOceania": "Oceania",
+
+  "advancedSearchingSettingsButton": "Advanced Searching Settings",
+  "advancedSearchingSettingsButtonDescription": "Click to expand/hide additional search options.",
+  "advancedSearchingSettingsListDescription": "Advanced Search Options List.",
+  "SortingOptions": "Sorting options",
+  "PopulationAscending": "Population ascending",
+  "PopulationDescending": "Population descending",
+  "IndependentCountry": "Independent Country",
+  "LandlockedCountry": "Landlocked Country",
+  "UnitedNationsMember": "United Nations Member",
+  "Traffic": "Traffic",
+  "ShowAllCountries": "Show all countries",
+  "Yes": "Yes",
+  "No": "No",
+  "LeftHand": "Left-hand",
+  "RightHand": "Right-hand",
+
+  "NothingFound": "Nothing Found...",
+  "LoadingSpinner": "Loading Spinner",
+
+  "CardMarkedCharacter": "Search phrase",
+  "Population": "Population",
+  "Region": "Region",
+  "Capital": "Capital"
+}

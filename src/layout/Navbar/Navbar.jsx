@@ -5,19 +5,23 @@ import DataContext from "../../context/DataContext";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import SelectInput from "../../components/SelectInput/SelectInput";
 
+import { useTranslation } from "react-i18next";
+
 export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
+  const { t } = useTranslation();
+
   const { arrowSVG, advancedSearching } = useContext(DataContext);
 
   const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 
   return (
     <nav className="navigation-bar">
-      <h2 className="visually-hidden">Main Navigation bar</h2>
+      <h2 className="visually-hidden">{t("navigationBarHeader")}</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         {!isDetailOpen ? (
           <>
             <fieldset className="navigation-bar__form-container">
-              <legend className="visually-hidden">Basic Searching</legend>
+              <legend className="visually-hidden">{t("navigationBarBasicSearchingHeader")}</legend>
               <SearchBar />
               <SelectInput />
             </fieldset>
@@ -26,15 +30,11 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
               className="navigation-bar__advanced-settings-btn"
               type="button"
               aria-controls="advanced-settings-list"
-              aria-label="Click to expand additional search options."
-              title={`${
-                advancedSettingsOpen
-                  ? "Click to hide additional search options."
-                  : "Click to expand additional search options."
-              }`}
+              aria-label={t("advancedSearchingSettingsButtonDescription")}
+              title={t("advancedSearchingSettingsButtonDescription")}
               onClick={() => setAdvancedSettingsOpen(!advancedSettingsOpen)}
             >
-              <span>Advanced Searching Settings</span>
+              <span>{t("advancedSearchingSettingsButton")}</span>
               <span className={`${advancedSettingsOpen ? "arrow-svg rotate" : "arrow-svg"}`}>
                 {arrowSVG}
               </span>
@@ -51,11 +51,11 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                 className="navigation-bar__advanced-settings-container"
                 role="region"
                 aria-expanded={advancedSettingsOpen}
-                aria-label="Advanced Search Options List."
+                aria-label={t("advancedSearchingSettingsListDescription")}
               >
                 <fieldset>
                   <legend className="navigation-bar__advanced-settings-legend">
-                    Sorting options:
+                    {t("SortingOptions")}:
                   </legend>
                   <div className="navigation-bar__advanced-settings-inputs-container">
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -127,7 +127,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="ascending"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Population ascending
+                        {t("PopulationAscending")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -151,7 +151,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="descending"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Population descending
+                        {t("PopulationDescending")}
                       </label>
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
 
                 <fieldset>
                   <legend className="navigation-bar__advanced-settings-legend">
-                    Independent Country:
+                    {t("IndependentCountry")}:
                   </legend>
                   <div className="navigation-bar__advanced-settings-inputs-container">
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -181,7 +181,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="independent-all"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Show all countries
+                        {t("ShowAllCountries")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -204,7 +204,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="independent-yes"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Yes
+                        {t("Yes")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -227,7 +227,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="independent-no"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        No
+                        {t("No")}
                       </label>
                     </div>
                   </div>
@@ -235,7 +235,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
 
                 <fieldset>
                   <legend className="navigation-bar__advanced-settings-legend">
-                    Landlocked Country:
+                    {t("LandlockedCountry")}:
                   </legend>
                   <div className="navigation-bar__advanced-settings-inputs-container">
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -257,7 +257,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="landlocked-all"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Show all countries
+                        {t("ShowAllCountries")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -280,7 +280,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="landlocked-yes"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Yes
+                        {t("Yes")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -303,7 +303,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="landlocked-no"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        No
+                        {t("No")}
                       </label>
                     </div>
                   </div>
@@ -311,7 +311,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
 
                 <fieldset>
                   <legend className="navigation-bar__advanced-settings-legend">
-                    United Nations Member:
+                    {t("UnitedNationsMember")}:
                   </legend>
                   <div className="navigation-bar__advanced-settings-inputs-container">
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -333,7 +333,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="united-nations-all"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Show all countries
+                        {t("ShowAllCountries")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -356,7 +356,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="united-nations-yes"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Yes
+                        {t("Yes")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -379,14 +379,16 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="united-nations-no"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        No
+                        {t("No")}
                       </label>
                     </div>
                   </div>
                 </fieldset>
 
                 <fieldset>
-                  <legend className="navigation-bar__advanced-settings-legend">Traffic:</legend>
+                  <legend className="navigation-bar__advanced-settings-legend">
+                    {t("Traffic")}:
+                  </legend>
                   <div className="navigation-bar__advanced-settings-inputs-container">
                     <div className="navigation-bar__advanced-settings-input-wrapper">
                       <input
@@ -406,7 +408,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="traffic-all"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Show all countries
+                        {t("ShowAllCountries")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -427,7 +429,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="traffic-yes"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Left-hand
+                        {t("LeftHand")}
                       </label>
                     </div>
                     <div className="navigation-bar__advanced-settings-input-wrapper">
@@ -448,7 +450,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
                         htmlFor="traffic-no"
                         className="navigation-bar__advanced-settings-label"
                       >
-                        Right-hand
+                        {t("RightHand")}
                       </label>
                     </div>
                   </div>
@@ -462,7 +464,7 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
             onClick={() => setIsDetailOpen(false)}
           >
             <span className="navigation-bar__back-btn--arrow">&#8592;</span>
-            back
+            {t("navigationBarBackButton")}
           </button>
         )}
       </form>

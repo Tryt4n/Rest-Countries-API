@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import DataContext from "../../context/DataContext";
 
+import { useTranslation } from "react-i18next";
+
 export default function SearchBar() {
+  const { t } = useTranslation();
+
   const { searchText, handleSearchChange } = useContext(DataContext);
   const [searchBarWarning, setSearchBarWarning] = useState(false);
 
@@ -26,7 +30,7 @@ export default function SearchBar() {
     <label
       htmlFor="country-searchbar"
       className="country-searchbar"
-      aria-label="searchbar"
+      aria-label={t("searchbarLabel")}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +47,7 @@ export default function SearchBar() {
         name="searchbar"
         id="country-searchbar"
         className="country-searchbar__input"
-        placeholder="Search for a country..."
+        placeholder={t("searchbarPlaceholder")}
         pattern="[a-zA-Z]"
         maxLength={30}
         value={searchText}
@@ -55,7 +59,7 @@ export default function SearchBar() {
           className="country-searchbar__warning"
           open={searchBarWarning}
         >
-          Not allowed characters
+          {t("searchbarWarningText")}
         </dialog>
       )}
     </label>

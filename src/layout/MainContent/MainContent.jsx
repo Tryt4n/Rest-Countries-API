@@ -6,7 +6,11 @@ import Navbar from "../Navbar/Navbar";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import DetailInfo from "../DetailInfo.jsx/DetailInfo";
 
+import { useTranslation } from "react-i18next";
+
 export default function MainContent() {
+  const { t } = useTranslation();
+
   const { data, isLoading, nothingFound, filteredData } = useContext(DataContext);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [detailInfo, setDetailInfo] = useState({});
@@ -43,7 +47,7 @@ export default function MainContent() {
                       ))}
                 </div>
               ) : (
-                <h2 className="country-cards-grid__nothing-found">Nothing Found...</h2>
+                <h2 className="country-cards-grid__nothing-found">{t("NothingFound")}</h2>
               )}
             </>
           ) : (

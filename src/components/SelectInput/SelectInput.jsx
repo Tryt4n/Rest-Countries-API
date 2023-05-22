@@ -3,6 +3,8 @@ import { useSelect } from "downshift";
 
 import DataContext from "../../context/DataContext";
 
+import { useTranslation } from "react-i18next";
+
 const regions = [
   { region: "Africa" },
   { region: "Americas" },
@@ -31,6 +33,8 @@ function stateReducer(state, actionAndChanges) {
 }
 
 export default function SelectInput() {
+  const { t } = useTranslation();
+
   const { arrowSVG, selectedRegions, setSelectedRegions } = useContext(DataContext);
 
   const {
@@ -64,7 +68,7 @@ export default function SelectInput() {
   return (
     <div
       className="select"
-      title="Click to show filtering options by region."
+      title={t("SelectTitle")}
     >
       <div
         className="select__text"
@@ -74,7 +78,7 @@ export default function SelectInput() {
           className="select__label"
           {...getLabelProps()}
         >
-          Filter by Region
+          {t("SelectLabel")}
         </label>
         <span>{arrowSVG}</span>
       </div>

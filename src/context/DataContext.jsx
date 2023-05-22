@@ -6,6 +6,7 @@ const DataContext = createContext();
 const arrowSVG = (
   <svg
     className="arrow-svg"
+    aria-hidden
     fill="currentColor"
     viewBox="0 0 330 330"
   >

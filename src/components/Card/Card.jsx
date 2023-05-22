@@ -5,7 +5,11 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
+import { useTranslation } from "react-i18next";
+
 export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
+  const { t } = useTranslation();
+
   const { searchText } = useContext(DataContext);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -26,6 +30,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
       onClick={() => {
         setDetailInfo(data);
         setIsDetailOpen(true);
+        console.log(data);
       }}
     >
       <article className="country-card">
@@ -49,6 +54,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
                   part.toLowerCase() === searchText.toLowerCase() ? (
                     <mark
                       className="country-card__marked-text"
+                      aria-label={t("CardMarkedCharacter")}
                       key={index}
                     >
                       {part}
@@ -61,17 +67,17 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
           </h2>
 
           <div className="country-card__text-line">
-            <b className="country-card__text-bolded">Population:</b>
+            <b className="country-card__text-bolded">{t("Population")}:</b>
             &nbsp;
             <span className="country-card__text-output">{data.population.toLocaleString()}</span>
           </div>
           <div className="country-card__text-line">
-            <b className="country-card__text-bolded">Region:</b>
+            <b className="country-card__text-bolded">{t("Region")}:</b>
             &nbsp;
             <span className="country-card__text-output">{data.region}</span>
           </div>
           <div className="country-card__text-line">
-            <b className="country-card__text-bolded">Capital:</b>
+            <b className="country-card__text-bolded">{t("Capital")}:</b>
             &nbsp;
             <span className="country-card__text-output">
               {data.capital ? data.capital : "none"}
