@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const DataContext = createContext();
@@ -76,30 +76,25 @@ export function DataProvider({ children }) {
   }, [API_URL]);
 
   //* Set filtered regions
-  function filterRegions() {
-    if (selectedRegions.length !== 0 && searchText) {
-      const filteredRegions = data.filter(
-        (country) =>
-          selectedRegions.some((item) => item.region === country.region) &&
-          country.name.common.toLowerCase().includes(searchText.toLowerCase())
-      );
-      return filteredRegions;
-    } else if (selectedRegions.length !== 0) {
-      const filteredRegions = data.filter((country) =>
+  const filterRegions = useCallback(() => {
+    let filteredRegions = [...data];
+
+    if (selectedRegions.length !== 0) {
+      filteredRegions = filteredRegions.filter((country) =>
         selectedRegions.some((item) => item.region === country.region)
       );
-      return filteredRegions;
-    } else if (searchText) {
-      const filteredRegions = data.filter((country) =>
+    }
+
+    if (searchText) {
+      filteredRegions = filteredRegions.filter((country) =>
         country.name.common.toLowerCase().includes(searchText.toLowerCase())
       );
-      return filteredRegions;
-    } else {
-      return data;
     }
-  }
 
-  //* Set searching countries
+    return filteredRegions;
+  }, [data, selectedRegions, searchText]);
+
+  //* Set searchbar searching countries
   function handleSearchChange(e) {
     setSearchText(e.target.value);
     const filtered = filterRegions().filter((country) => {
@@ -115,27 +110,27 @@ export function DataProvider({ children }) {
     setFilteredData(filtered);
   }
 
-  // //* Countries alphabetically order
-  function sortAlphabetically(data) {
-    const alphabeticalData = [...data].sort((a, b) => {
-      const alphabeticalA = a.name.common;
-      const alphabeticalB = b.name.common;
+  //* Advanced Searching Settings
+  const handleFiltering = useCallback(() => {
+    let filteredData = filterRegions();
 
-      if (alphabeticalSearching === true) {
-        return alphabeticalA.localeCompare(alphabeticalB);
-      } else if (alphabeticalSearching === false) {
-        return alphabeticalB.localeCompare(alphabeticalA);
-      }
-      return 0;
-    });
+    //* Countries alphabetically order
+    if (alphabeticalSearching !== null) {
+      filteredData = filteredData.sort((a, b) => {
+        const alphabeticalA = a.name.common;
+        const alphabeticalB = b.name.common;
 
-    return alphabeticalData;
-  }
+        if (alphabeticalSearching) {
+          return alphabeticalA.localeCompare(alphabeticalB);
+        } else {
+          return alphabeticalB.localeCompare(alphabeticalA);
+        }
+      });
+    }
 
-  //* Countries sort by population
-  function sortByPopulation(data) {
+    //* Countries sort by population
     if (populationSearching && populationAscending !== null) {
-      const sortedData = [...data].sort((a, b) => {
+      filteredData = filteredData.sort((a, b) => {
         const populationA = a.population;
         const populationB = b.population;
 
@@ -145,89 +140,33 @@ export function DataProvider({ children }) {
           return populationB - populationA;
         }
       });
-
-      return sortedData;
-    } else {
-      return data;
     }
-  }
 
-  //* Independent search
-  function handleIndependentSearch(data) {
-    if (independent) {
-      const independentCountries = data.filter((country) => country.independent === true);
-      return independentCountries;
-    } else if (independent === false) {
-      const nonIndependentCountries = data.filter((country) => country.independent === false);
-      return nonIndependentCountries;
-    } else {
-      return data;
+    //* Independent search
+    if (independent !== null) {
+      filteredData = filteredData.filter((country) => country.independent === independent);
     }
-  }
 
-  //* Landlocked search
-  function handleLandlockedSearch(data) {
-    if (landlocked) {
-      const landlockedCountries = data.filter((country) => country.landlocked === true);
-      return landlockedCountries;
-    } else if (landlocked === false) {
-      const nonlandlockedCountries = data.filter((country) => country.landlocked === false);
-      return nonlandlockedCountries;
-    } else {
-      return data;
+    //* Landlocked search
+    if (landlocked !== null) {
+      filteredData = filteredData.filter((country) => country.landlocked === landlocked);
     }
-  }
 
-  //* United Nations search
-  function handleUNSearch(data) {
-    if (unitedNationsMember) {
-      const unitedNationsCountries = data.filter((country) => country.unMember === true);
-      return unitedNationsCountries;
-    } else if (unitedNationsMember === false) {
-      const nonUnitedNationsCountries = data.filter((country) => country.unMember === false);
-      return nonUnitedNationsCountries;
-    } else {
-      return data;
+    //* United Nations search
+    if (unitedNationsMember !== null) {
+      filteredData = filteredData.filter((country) => country.unMember === unitedNationsMember);
     }
-  }
 
-  //* Traffic search
-  function handleTrafficSearch(data) {
-    if (traffic) {
-      const leftHandTrafficCountries = data.filter((country) => country.car.side === "left");
-      return leftHandTrafficCountries;
-    } else if (traffic === false) {
-      const rightHandTrafficCountries = data.filter((country) => country.car.side === "right");
-      return rightHandTrafficCountries;
-    } else {
-      return data;
+    //* Traffic search
+    if (traffic !== null) {
+      filteredData = filteredData.filter(
+        (country) => country.car.side === (traffic ? "left" : "right")
+      );
     }
-  }
 
-  //* Display filtered regions
-  useEffect(() => {
-    const filtered = filterRegions();
-    const sortedData = populationSearching
-      ? sortByPopulation(filtered)
-      : sortAlphabetically(filtered);
-    const independentData = handleIndependentSearch(sortedData);
-    const landlockedData = handleLandlockedSearch(independentData);
-    const UNData = handleUNSearch(landlockedData);
-    const trafficData = handleTrafficSearch(UNData);
-
-    setFilteredData(trafficData);
-    setNothingFound(
-      (searchText !== "" && landlockedData.length === 0) ||
-        sortedData.length === 0 ||
-        independentData.length === 0 ||
-        landlockedData.length === 0 ||
-        UNData.length === 0 ||
-        trafficData.length === 0
-    );
+    return filteredData;
   }, [
-    selectedRegions,
-    data,
-    searchText,
+    filterRegions,
     alphabeticalSearching,
     populationSearching,
     populationAscending,
@@ -235,8 +174,16 @@ export function DataProvider({ children }) {
     landlocked,
     unitedNationsMember,
     traffic,
-    nothingFound,
   ]);
+  handleFiltering();
+
+  //* Display filtered regions
+  useEffect(() => {
+    const filteredData = handleFiltering();
+
+    setFilteredData(filteredData);
+    setNothingFound((searchText !== "" && filteredData.length === 0) || filteredData.length === 0);
+  }, [selectedRegions, data, searchText, handleFiltering]);
 
   return (
     <DataContext.Provider
