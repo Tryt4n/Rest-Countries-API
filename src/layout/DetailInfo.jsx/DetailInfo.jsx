@@ -17,7 +17,7 @@ const closeBtn = (
 export default function DetailInfo({ countryData, setDetailInfo }) {
   const { t } = useTranslation();
 
-  const { arrowSVG, data } = useContext(DataContext);
+  const { API_LANGUAGE_KEY, arrowSVG, data } = useContext(DataContext);
 
   const [showMoreInfo, setShowMoreInfo] = useState(false);
 
@@ -46,24 +46,34 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
     }
   }
 
+  const cardName =
+    API_LANGUAGE_KEY === "en"
+      ? countryData.name.common
+      : countryData.translations[API_LANGUAGE_KEY].common;
+  const cardNameOfficial =
+    API_LANGUAGE_KEY === "en"
+      ? countryData.name.official
+      : countryData.translations[API_LANGUAGE_KEY].official;
+
   return (
     <article className="detail-info">
       <h2 className="visually-hidden">
-        {t("DetailInfoOf")} {countryData.name.official}
+        {t("DetailInfoOf")}
+        {cardNameOfficial}
       </h2>
       <img
         src={countryData.flags.svg}
-        alt={`${countryData.name.official} flag`}
+        alt={`${t("Flag")} ${cardNameOfficial}`}
         aria-label={countryData.flags.alt ? countryData.flags.alt : undefined}
         className="detail-info__img"
       />
       <section className="detail-info__data-container">
-        <h3 className="detail-info__header">{countryData.name.common}</h3>
+        <h3 className="detail-info__header">{cardName}</h3>
         <ul className="detail-info__list-container">
           <li className="detail-info__list-item-wrapper">
             <b>{t("NativeName")}:</b>
             {countryData.name.nativeName == null ? (
-              "none"
+              t("NotApplicable")
             ) : (
               <span>{Object.values(countryData.name.nativeName)[0].common}</span>
             )}
@@ -78,13 +88,13 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>{t("SubRegion")}:</b>
-            {!countryData.subregion ? "none" : <span>{countryData.subregion}</span>}
+            {!countryData.subregion ? t("NotApplicable") : <span>{countryData.subregion}</span>}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>{t("Capital")}:</b>
             <div>
               {countryData.capital == null
-                ? "none"
+                ? t("NotApplicable")
                 : countryData.capital.map((capital, index) => (
                     <React.Fragment key={capital}>
                       {index > 0 && ", "}
@@ -102,13 +112,13 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                 })}
               </div>
             ) : (
-              "none"
+              t("NotApplicable")
             )}
           </li>
           <li className="detail-info__list-item-wrapper">
             <b>{t("Currencies")}:</b>
             {countryData.currencies == null ? (
-              "none"
+              t("NotApplicable")
             ) : (
               <span title={`Symbol: ${Object.values(countryData.currencies)[0].symbol}`}>
                 {Object.values(countryData.currencies)[0].name}
@@ -119,7 +129,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
             <b>{t("Languages")}:</b>
             <div>
               {countryData.languages == null
-                ? "none"
+                ? t("NotApplicable")
                 : Object.entries(countryData.languages).map(
                     ([languageCode, languageName], index) => (
                       <React.Fragment key={languageCode}>
@@ -155,7 +165,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
 
       <section className="detail-info__more-info-container">
         <h3 className="visually-hidden">
-          {t("MoreInfoOf")} {countryData.name.official}
+          {t("MoreInfoOf")} {cardNameOfficial}
         </h3>
         <button
           className="detail-info__more-info-btn"
@@ -177,11 +187,11 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
           <ul
             id="more-info-container"
             className="detail-info__more-info-list"
-            aria-expanded={showMoreInfo ? "true" : "false"}
+            aria-expanded={showMoreInfo ? true : false}
           >
             <li className="detail-info__more-info-list-item-wrapper">
               <b id="official-name">{t("OfficialName")}:</b>
-              <span aria-labelledby="official-name">{countryData.name.official}</span>
+              <span aria-labelledby="official-name">{cardNameOfficial}</span>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
               <b id="traffic">{t("Traffic")}:</b>
@@ -213,7 +223,9 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
               </div>
             </li>
             <li className="detail-info__more-info-list-item-wrapper">
-              <b id="un-member">{t("UNMember")}:</b>
+              <b id="un-member">
+                {t("Member")} <abbr title={t("UNMember")}>{t("UNMemberAbbreviation")}</abbr>:
+              </b>
               <span aria-labelledby="un-member">{countryData.unMember ? t("Yes") : t("No")}</span>
             </li>
             <li className="detail-info__more-info-dialog-wrapper">
@@ -261,7 +273,7 @@ export default function DetailInfo({ countryData, setDetailInfo }) {
                   >
                     <img
                       src={countryData.coatOfArms.png}
-                      alt={`${countryData.name.common} ${t("CoatOfArms")}`}
+                      alt={`${cardNameOfficial} ${t("CoatOfArms")}`}
                       loading="lazy"
                       className="detail-info__coat-of-arms"
                     />

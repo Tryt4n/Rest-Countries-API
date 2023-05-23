@@ -47,6 +47,7 @@
   "Population": "Population",
   "Region": "Region",
   "Capital": "Capital",
+  "Flag": "Flag",
 
   "DetailInfoOf": "Detail Info of",
   "MoreInfoOf": "More Info of",
@@ -64,10 +65,13 @@
   "IsCountryIndependent": "Is country independent",
   "IsCountryLandlocked": "Is country landlocked",
   "Timezones": "Timezones",
-  "UNMember": "UN Member",
+  "Member": "Member",
+  "UNMember": "United Nations",
+  "UNMemberAbbreviation": "UN",
   "ClickToShowOnMap": "Click to show on map.",
   "ClickToShowCoatOfArms": "Click to show coat of arms.",
   "GoogleMap": "Google Map",
   "CoatOfArms": "Coat of Arms",
-  "CloseButton": "Close Button"
+  "CloseButton": "Close Button",
+  "NotApplicable": "Not applicable"
 }

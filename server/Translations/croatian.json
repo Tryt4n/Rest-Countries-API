@@ -1,5 +1,5 @@
 {
-  "mainHeader": "Gdje u svijetu?",
+  "mainHeader": "Where in the world?",
 
   "lightMode": "Light Mode",
   "darkMode": "Dark Mode",
@@ -46,5 +46,32 @@
   "CardMarkedCharacter": "Search phrase",
   "Population": "Population",
   "Region": "Region",
-  "Capital": "Capital"
+  "Capital": "Capital",
+  "Flag": "Flag",
+
+  "DetailInfoOf": "Detail Info of",
+  "MoreInfoOf": "More Info of",
+  "NativeName": "Native Name",
+  "SubRegion": "Sub Region",
+  "TLD": "Top Level Domain",
+  "Currencies": "Currencies",
+  "Languages": "Languages",
+  "BorderCountries": "Border Countries",
+  "MoreInfo": "More Info",
+  "MoreInfoDescription": "Click to show more information.",
+  "OfficialName": "Official Name",
+  "RightHandTraffic": "Right-hand Traffic",
+  "LeftHandTraffic": "Left-hand Traffic",
+  "IsCountryIndependent": "Is country independent",
+  "IsCountryLandlocked": "Is country landlocked",
+  "Timezones": "Timezones",
+  "Member": "Member",
+  "UNMember": "United Nations",
+  "UNMemberAbbreviation": "UN",
+  "ClickToShowOnMap": "Click to show on map.",
+  "ClickToShowCoatOfArms": "Click to show coat of arms.",
+  "GoogleMap": "Google Map",
+  "CoatOfArms": "Coat of Arms",
+  "CloseButton": "Close Button",
+  "NotApplicable": "Not applicable"
 }

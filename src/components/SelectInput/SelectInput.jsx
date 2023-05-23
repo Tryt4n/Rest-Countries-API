@@ -97,7 +97,7 @@ export default function SelectInput() {
                 "aria-selected": selectedRegions.includes(item),
               })}
             >
-              <span>{item.region}</span>
+              <span>{t(`SelectRegion${item.region}`)}</span>
             </li>
           ))}
       </ul>

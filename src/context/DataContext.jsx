@@ -19,6 +19,32 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 );
 
 export function DataProvider({ children }) {
+  const lng = navigator.language;
+  // const lng = "en";
+  const languageMapping = {
+    eng: ["en", "en"],
+    ces: ["cs", "ces"],
+    deu: ["de", "deu"],
+    est: ["et", "est"],
+    fin: ["fi", "fin"],
+    fra: ["fr", "fra"],
+    hrv: ["hr", "hrv"],
+    hun: ["hu", "hun"],
+    ita: ["it", "ita"],
+    nld: ["nl", "nld"],
+    pol: ["pl", "pol"],
+    por: ["pt", "por"],
+    rus: ["ru", "rus"],
+    slk: ["sk", "slk"],
+    spa: ["es", "spa"],
+    srp: ["sr", "srp"],
+    swe: ["sv", "swe"],
+    tur: ["tr", "tur"],
+  };
+  const newLanguage =
+    Object.values(languageMapping).find((code) => lng.startsWith(code[0])) || "en";
+  const API_LANGUAGE_KEY = newLanguage === "en" ? "en" : newLanguage[1];
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [nothingFound, setNothingFound] = useState(false);
@@ -86,26 +112,40 @@ export function DataProvider({ children }) {
       );
     }
 
-    if (searchText) {
+    if (API_LANGUAGE_KEY === "en" && searchText) {
       filteredRegions = filteredRegions.filter((country) =>
         country.name.common.toLowerCase().includes(searchText.toLowerCase())
+      );
+    } else if (searchText) {
+      filteredRegions = filteredRegions.filter((country) =>
+        country.translations[API_LANGUAGE_KEY].common
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
       );
     }
 
     return filteredRegions;
-  }, [data, selectedRegions, searchText]);
+  }, [data, selectedRegions, searchText, API_LANGUAGE_KEY]);
 
   //* Set searchbar searching countries
   function handleSearchChange(e) {
     setSearchText(e.target.value);
     const filtered = filterRegions().filter((country) => {
-      if (selectedRegions.length !== 0) {
-        return (
-          country.name.common.toLowerCase().includes(e.target.value.toLowerCase()) &&
-          selectedRegions.some((item) => item.region === country.region)
-        );
-      } else {
-        return country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
+      const selectedRegionsLength = selectedRegions.length !== 0;
+      const commonName = country.name.common.toLowerCase().includes(e.target.value.toLowerCase());
+      const translation = country.translations[API_LANGUAGE_KEY]?.common
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase());
+      const regionCheck = selectedRegions.some((item) => item.region === country.region);
+
+      if (API_LANGUAGE_KEY === "en" && selectedRegionsLength) {
+        return commonName && regionCheck;
+      } else if (API_LANGUAGE_KEY === "en") {
+        return commonName;
+      } else if (API_LANGUAGE_KEY !== "en" && selectedRegionsLength) {
+        return translation && regionCheck;
+      } else if (API_LANGUAGE_KEY !== "en") {
+        return translation;
       }
     });
     setFilteredData(filtered);
@@ -189,6 +229,8 @@ export function DataProvider({ children }) {
   return (
     <DataContext.Provider
       value={{
+        lng: lng,
+        API_LANGUAGE_KEY: API_LANGUAGE_KEY,
         data: data,
         setData: setData,
         isLoading: isLoading,

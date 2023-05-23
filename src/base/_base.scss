@@ -71,6 +71,10 @@ svg {
   user-select: none;
 }
 
+abbr[title] {
+  text-decoration: none;
+}
+
 /* clears the ‘X’ from Internet Explorer */
 input[type="search"]::-ms-clear {
   display: none;

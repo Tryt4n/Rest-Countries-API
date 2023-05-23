@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import HeaderSection from "../HeaderSection/HeaderSection";
 import MainContent from "../MainContent/MainContent";
 
+import DataContext from "../../context/DataContext";
+
 import { useTranslation } from "react-i18next";
+import { useContext } from "react";
 
 export default function App() {
+  const { lng } = useContext(DataContext);
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    const lng = navigator.language;
-    // const lng = "hr";
-
     i18n.changeLanguage(lng);
   }, []);
 

@@ -10,18 +10,29 @@ import { useTranslation } from "react-i18next";
 export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
   const { t } = useTranslation();
 
-  const { searchText } = useContext(DataContext);
+  const { API_LANGUAGE_KEY, searchText } = useContext(DataContext);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isMatch, setIsMatch] = useState(false);
 
   useEffect(() => {
-    setIsMatch(data.name.common.toLowerCase().includes(searchText.toLowerCase()));
-  }, [data.name.common, searchText]);
+    if (API_LANGUAGE_KEY === "en") {
+      setIsMatch(data.name.common.toLowerCase().includes(searchText.toLowerCase()));
+    } else {
+      setIsMatch(
+        data.translations[API_LANGUAGE_KEY].common.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+  }, [data.name.common, data.translations, searchText, API_LANGUAGE_KEY]);
 
   function handleImageLoad() {
     setIsImageLoaded(true);
   }
+
+  const cardName =
+    API_LANGUAGE_KEY === "en" ? data.name.common : data.translations[API_LANGUAGE_KEY].common;
+  const cardNameOfficial =
+    API_LANGUAGE_KEY === "en" ? data.name.official : data.translations[API_LANGUAGE_KEY].official;
 
   return (
     <a
@@ -41,7 +52,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
         )}
         <img
           src={data.flags.svg}
-          alt={`${data.name.official} flag`}
+          alt={`${t("Flag")} ${cardNameOfficial}`}
           aria-label={data.flags.alt ? data.flags.alt : undefined}
           loading="lazy"
           className="country-card__img"
@@ -50,7 +61,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
         <div className="country-card__text-wrapper">
           <h2 className="country-card__name">
             {isMatch
-              ? data.name.common.split(new RegExp(`(${searchText})`, "gi")).map((part, index) =>
+              ? cardName.split(new RegExp(`(${searchText})`, "gi")).map((part, index) =>
                   part.toLowerCase() === searchText.toLowerCase() ? (
                     <mark
                       className="country-card__marked-text"
@@ -63,9 +74,8 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
                     part
                   )
                 )
-              : data.name.common}
+              : cardName}
           </h2>
-
           <div className="country-card__text-line">
             <b className="country-card__text-bolded">{t("Population")}:</b>
             &nbsp;
@@ -80,7 +90,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
             <b className="country-card__text-bolded">{t("Capital")}:</b>
             &nbsp;
             <span className="country-card__text-output">
-              {data.capital ? data.capital : "none"}
+              {data.capital ? data.capital : t("NotApplicable")}
             </span>
           </div>
         </div>

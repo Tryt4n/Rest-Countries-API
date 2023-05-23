@@ -46,8 +46,9 @@
   "CardMarkedCharacter": "Wyszukiwana fraza",
   "Population": "Populacja",
   "Capital": "Stolica",
+  "Flag": "Flaga",
 
-  "DetailsInfoOf": "Szczegółowe informacje o",
+  "DetailInfoOf": "Szczegółowe informacje o",
   "MoreInfoOf": "Więcej informacji o",
   "NativeName": "Ojczysta Nazwa",
   "SubRegion": "Podregion",
@@ -63,10 +64,13 @@
   "IsCountryIndependent": "Jest krajem niezależnym",
   "IsCountryLandlocked": "Czy kraj nie ma dostępu do morza",
   "Timezones": "Strefy czasowe",
-  "UNMember": "Członek UN",
+  "Member": "Członek",
+  "UNMember": "Organizacja Narodów Zjednoczonych",
+  "UNMemberAbbreviation": "ONZ",
   "ClickToShowOnMap": "Naciśnij aby pokazać na mapie.",
   "ClickToShowCoatOfArms": "Naciśnij aby pokazać herb.",
   "GoogleMap": "Mapy Google",
   "CoatOfArms": "Herb",
-  "CloseButton": "Przycisk Zamykający"
+  "CloseButton": "Przycisk Zamykający",
+  "NotApplicable": "Nie dotyczy"
 }
