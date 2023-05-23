@@ -20,7 +20,7 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
       setIsMatch(data.name.common.toLowerCase().includes(searchText.toLowerCase()));
     } else {
       setIsMatch(
-        data.translations[API_LANGUAGE_KEY].common.toLowerCase().includes(searchText.toLowerCase())
+        data.translations[API_LANGUAGE_KEY]?.common.toLowerCase().includes(searchText.toLowerCase())
       );
     }
   }, [data.name.common, data.translations, searchText, API_LANGUAGE_KEY]);
@@ -28,11 +28,16 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
   function handleImageLoad() {
     setIsImageLoaded(true);
   }
-
+  //! (API_LANGUAGE_KEY === "hrv" && data.cca3 === "CUW") fallback for country of `Curaçao` in croatian language
   const cardName =
-    API_LANGUAGE_KEY === "en" ? data.name.common : data.translations[API_LANGUAGE_KEY].common;
+    API_LANGUAGE_KEY === "en" || (API_LANGUAGE_KEY === "hrv" && data.cca3 === "CUW")
+      ? data.name.common
+      : data.translations[API_LANGUAGE_KEY].common;
+
   const cardNameOfficial =
-    API_LANGUAGE_KEY === "en" ? data.name.official : data.translations[API_LANGUAGE_KEY].official;
+    API_LANGUAGE_KEY === "en" || (API_LANGUAGE_KEY === "hrv" && data.cca3 === "CUW")
+      ? data.name.official
+      : data.translations[API_LANGUAGE_KEY].official;
 
   return (
     <a

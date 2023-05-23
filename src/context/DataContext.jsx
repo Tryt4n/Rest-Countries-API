@@ -20,7 +20,6 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 
 export function DataProvider({ children }) {
   const lng = navigator.language;
-  // const lng = "en";
   const languageMapping = {
     eng: ["en", "en"],
     ces: ["cs", "ces"],
@@ -35,7 +34,7 @@ export function DataProvider({ children }) {
     pol: ["pl", "pol"],
     por: ["pt", "por"],
     rus: ["ru", "rus"],
-    slk: ["sk", "slk"],
+    slk: ["sl", "slk"],
     spa: ["es", "spa"],
     srp: ["sr", "srp"],
     swe: ["sv", "swe"],
@@ -118,7 +117,7 @@ export function DataProvider({ children }) {
       );
     } else if (searchText) {
       filteredRegions = filteredRegions.filter((country) =>
-        country.translations[API_LANGUAGE_KEY].common
+        country.translations[API_LANGUAGE_KEY]?.common
           .toLowerCase()
           .includes(searchText.toLowerCase())
       );
@@ -158,8 +157,15 @@ export function DataProvider({ children }) {
     //* Countries alphabetically order
     if (alphabeticalSearching !== null) {
       filteredData = filteredData.sort((a, b) => {
-        const alphabeticalA = a.name.common;
-        const alphabeticalB = b.name.common;
+        //! (API_LANGUAGE_KEY === "hrv" && data.cca3 === "CUW") fallback for country of `Curaçao` in croatian language
+        const alphabeticalA =
+          API_LANGUAGE_KEY === "en" || (API_LANGUAGE_KEY === "hrv" && a.cca3 === "CUW")
+            ? a.name.common
+            : a.translations[API_LANGUAGE_KEY].common;
+        const alphabeticalB =
+          API_LANGUAGE_KEY === "en" || (API_LANGUAGE_KEY === "hrv" && b.cca3 === "CUW")
+            ? b.name.common
+            : b.translations[API_LANGUAGE_KEY].common;
 
         if (alphabeticalSearching) {
           return alphabeticalA.localeCompare(alphabeticalB);
