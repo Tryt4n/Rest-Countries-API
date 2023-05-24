@@ -5,7 +5,7 @@ export default function LoadingSpinner() {
 
   return (
     <div className="lds-default">
-      <span className="visually-hidden">Loading Spinner</span>
+      <span className="visually-hidden">{t(LoadingSpinner)}</span>
       <div></div>
       <div></div>
       <div></div>
