@@ -4,10 +4,8 @@ export default function LoadingSpinner() {
   const { t } = useTranslation();
 
   return (
-    <div
-      className="lds-default"
-      aria-label={t("LoadingSpinner")}
-    >
+    <div className="lds-default">
+      <span className="visually-hidden">Loading Spinner</span>
       <div></div>
       <div></div>
       <div></div>
