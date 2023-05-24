@@ -69,7 +69,6 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
                   part.toLowerCase() === searchText.toLowerCase() ? (
                     <mark
                       className="country-card__marked-text"
-                      aria-label={t("CardMarkedCharacter")}
                       key={index}
                     >
                       {part}
