@@ -461,6 +461,8 @@ export default function Navbar({ isDetailOpen, setIsDetailOpen }) {
         ) : (
           <button
             className="navigation-bar__back-btn"
+            aria-label={t("GoToMainPage")}
+            title={t("GoToMainPage")}
             onClick={() => setIsDetailOpen(false)}
           >
             <span className="navigation-bar__back-btn--arrow">&#8592;</span>

@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     i18n.changeLanguage(lng);
-  }, []);
+  }, [i18n, lng]);
 
   return (
     <>

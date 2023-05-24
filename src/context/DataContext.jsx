@@ -221,6 +221,7 @@ export function DataProvider({ children }) {
     landlocked,
     unitedNationsMember,
     traffic,
+    API_LANGUAGE_KEY,
   ]);
   handleFiltering();
 

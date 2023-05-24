@@ -46,7 +46,6 @@ export default function Card({ data, setDetailInfo, setIsDetailOpen }) {
       onClick={() => {
         setDetailInfo(data);
         setIsDetailOpen(true);
-        console.log(data);
       }}
     >
       <article className="country-card">

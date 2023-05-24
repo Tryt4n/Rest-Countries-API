@@ -21,9 +21,11 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setSearchBarWarning(false);
     }, 3000);
+
+    return () => clearTimeout(timeout);
   }, [searchBarWarning]);
 
   return (

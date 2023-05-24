@@ -18,6 +18,7 @@
   }
 
   &__link {
+    min-width: 100%;
     transition: v.$main-transition;
     &:where(:hover, :focus-visible) {
       opacity: 0.5;
